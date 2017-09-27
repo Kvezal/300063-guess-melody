@@ -64,7 +64,8 @@
 
   const documentKeyUpHandler = (evt) => {
     if (evt.keyCode === KEY_CODES.ALT) {
-      document.removeEventListener(`keyup`, documentKeyDownHandler);
+      document.removeEventListener(`keydown`, documentKeyDownHandler);
+      document.removeEventListener(`keyup`, documentKeyUpHandler);
     }
   };
 
