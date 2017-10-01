@@ -43,7 +43,7 @@ gulp.task('scripts', function () {
     .pipe(sourcemaps.init())
     .pipe(rollup({}, 'iife'))
     .pipe(sourcemaps.write(''))
-    .pipe(gulp.dest('build/js/'));
+    .pipe(gulp.dest('build/js'));
 });
 
 gulp.task('test', function () {
