@@ -1,13 +1,13 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import displayScreen from './functions/screenRender';
-import screenResultWin from './result-win';
-import screenResultTimeIsOver from './result-time-is-over';
-import screenResultAttemptsEnded from './result-attempts-ended';
+import displayScreenResultWin from './result-win';
+import displayScreenResultTimeIsOver from './result-time-is-over';
+import displayScreenResultAttemptsEnded from './result-attempts-ended';
 
 const RESULT_SCREENS = [
-  screenResultWin,
-  screenResultTimeIsOver,
-  screenResultAttemptsEnded
+  displayScreenResultWin,
+  displayScreenResultTimeIsOver,
+  displayScreenResultAttemptsEnded
 ];
 
 const markupScreenGenre = `
@@ -94,22 +94,26 @@ const markupScreenGenre = `
     </div>
   </section>`;
 
-const screenGenre = getElementFromTemplate(markupScreenGenre);
-const answersList = screenGenre.querySelectorAll(`input[name="answer"]`);
-const formGenre = screenGenre.querySelector(`.genre`);
+const displayScreenGenre = () => {
+  const screenGenre = getElementFromTemplate(markupScreenGenre);
+  displayScreen(screenGenre);
 
-const checkFormGenre = () => Array.prototype.some.call(answersList, (it) => it.checked);
+  const answersList = document.querySelectorAll(`input[name="answer"]`);
+  const formGenre = document.querySelector(`.genre`);
 
-const getRandomNumber = (max) => Math.floor(Math.random() * max);
+  const checkFormGenre = () => Array.prototype.some.call(answersList, (it) => it.checked);
 
-const formGenreSubmitHandler = (evt) => {
-  evt.preventDefault();
+  const getRandomNumber = (max) => Math.floor(Math.random() * max);
 
-  if (checkFormGenre()) {
-    displayScreen(RESULT_SCREENS[getRandomNumber(RESULT_SCREENS.length)]);
-  }
+  const formGenreSubmitHandler = (evt) => {
+    evt.preventDefault();
+
+    if (checkFormGenre()) {
+      RESULT_SCREENS[getRandomNumber(RESULT_SCREENS.length)]();
+    }
+  };
+
+  formGenre.addEventListener(`submit`, formGenreSubmitHandler);
 };
 
-formGenre.addEventListener(`submit`, formGenreSubmitHandler);
-
-export default screenGenre;
+export default displayScreenGenre;

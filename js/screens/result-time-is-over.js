@@ -1,6 +1,6 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import displayScreen from './functions/screenRender';
-import screenWelcome from './welcome';
+import addButtonReplayListener from './buttonReplay';
 
 const markupScreenResultTimeIsOver = `
   <section class="main main--result">
@@ -11,15 +11,12 @@ const markupScreenResultTimeIsOver = `
     <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
   </section>`;
 
-const screenResultTimeIsOver = getElementFromTemplate(markupScreenResultTimeIsOver);
+const displayScreenResultTimeIsOver = () => {
+  const screenResultTimeIsOver = getElementFromTemplate(markupScreenResultTimeIsOver);
 
-const buttonReplay = screenResultTimeIsOver.querySelector(`.main-replay`);
+  displayScreen(screenResultTimeIsOver);
 
-const buttonReplayClickHandler = (evt) => {
-  evt.preventDefault();
-  displayScreen(screenWelcome);
+  addButtonReplayListener();
 };
 
-buttonReplay.addEventListener(`click`, buttonReplayClickHandler);
-
-export default screenResultTimeIsOver;
+export default displayScreenResultTimeIsOver;
