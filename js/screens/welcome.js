@@ -15,8 +15,6 @@ const markupScreenWelcome = `
   </section>`;
 
 const screenWelcome = getElementFromTemplate(markupScreenWelcome);
-displayScreen(screenWelcome);
-
 
 const buttonPlay = screenWelcome.querySelector(`.main-play`);
 
@@ -27,5 +25,6 @@ const buttonPlayClickHandler = (evt) => {
 
 buttonPlay.addEventListener(`click`, buttonPlayClickHandler);
 
+displayScreen(screenWelcome);
 
 export default screenWelcome;
