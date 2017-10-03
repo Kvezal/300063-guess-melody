@@ -1,6 +1,6 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import displayScreen from './functions/screenRender';
-import screenGenre from './genre';
+import displayScreenGenre from './genre';
 
 const markupScreenArtist = `
   <section class="main main--level main--level-artist">
@@ -63,23 +63,29 @@ const markupScreenArtist = `
     </div>
   </section>`;
 
-const screenArtist = getElementFromTemplate(markupScreenArtist);
+const displayScreenArtist = () => {
+  const screenArtist = getElementFromTemplate(markupScreenArtist);
+  displayScreen(screenArtist);
 
-const answersList = screenArtist.querySelector(`.main-list`);
+  const answersList = document.querySelector(`.main-list`);
 
-const answersListClickHandler = (evt) => {
-  let target = evt.target;
+  const answersListClickHandler = (evt) => {
+    let target = evt.target;
 
-  while (!target.classList.contains(`main-list`)) {
-    if (target.classList.contains(`main-answer`)) {
-      displayScreen(screenGenre);
-      return;
+    answersList.removeEventListener(`click`, answersListClickHandler);
+
+    while (!target.classList.contains(`main-list`)) {
+      if (target.classList.contains(`main-answer`)) {
+        displayScreenGenre();
+        return;
+      }
+
+      target = target.parentElement;
     }
+  };
 
-    target = target.parentElement;
-  }
+  answersList.addEventListener(`click`, answersListClickHandler);
+
 };
 
-answersList.addEventListener(`click`, answersListClickHandler);
-
-export default screenArtist;
+export default displayScreenArtist;

@@ -1,6 +1,6 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import displayScreen from './functions/screenRender';
-import screenArtist from './artist';
+import displayScreenArtist from './artist';
 
 const markupScreenWelcome = `
   <section class="main main--welcome">
@@ -14,18 +14,23 @@ const markupScreenWelcome = `
     </p>
   </section>`;
 
-const screenWelcome = getElementFromTemplate(markupScreenWelcome);
-displayScreen(screenWelcome);
+const displayScreenWelcome = () => {
+  const screenWelcome = getElementFromTemplate(markupScreenWelcome);
+  displayScreen(screenWelcome);
 
+  const buttonPlay = document.querySelector(`.main-play`);
 
-const buttonPlay = screenWelcome.querySelector(`.main-play`);
+  const buttonPlayClickHandler = (evt) => {
+    evt.preventDefault();
 
-const buttonPlayClickHandler = (evt) => {
-  evt.preventDefault();
-  displayScreen(screenArtist);
+    buttonPlay.removeEventListener(`click`, buttonPlayClickHandler);
+
+    displayScreenArtist();
+  };
+
+  buttonPlay.addEventListener(`click`, buttonPlayClickHandler);
 };
 
-buttonPlay.addEventListener(`click`, buttonPlayClickHandler);
+displayScreenWelcome();
 
-
-export default screenWelcome;
+export default displayScreenWelcome;

@@ -1,7 +1,7 @@
 export default (markup) => {
-  const containerForNewHTMLElement = document.createElement(`div`);
+  const containerForNewHTMLElement = document.createElement(`template`);
 
-  containerForNewHTMLElement.insertAdjacentHTML(`beforeEnd`, markup);
+  containerForNewHTMLElement.innerHTML = markup;
 
-  return containerForNewHTMLElement.firstElementChild;
+  return containerForNewHTMLElement.content;
 };
