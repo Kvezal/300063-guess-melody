@@ -22,6 +22,9 @@ const displayScreenWelcome = () => {
 
   const buttonPlayClickHandler = (evt) => {
     evt.preventDefault();
+
+    buttonPlay.removeEventListener(`click`, buttonPlayClickHandler);
+
     displayScreenArtist();
   };
 

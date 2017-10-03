@@ -5,6 +5,9 @@ const addButtonReplayListener = () => {
 
   const buttonReplayClickHandler = (evt) => {
     evt.preventDefault();
+
+    buttonReplay.removeEventListener(`click`, buttonReplayClickHandler);
+
     displayScreenWelcome();
   };
 

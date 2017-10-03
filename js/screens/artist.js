@@ -72,6 +72,8 @@ const displayScreenArtist = () => {
   const answersListClickHandler = (evt) => {
     let target = evt.target;
 
+    answersList.removeEventListener(`click`, answersListClickHandler);
+
     while (!target.classList.contains(`main-list`)) {
       if (target.classList.contains(`main-answer`)) {
         displayScreenGenre();
