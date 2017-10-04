@@ -108,9 +108,9 @@ const displayScreenGenre = () => {
   const formGenreSubmitHandler = (evt) => {
     evt.preventDefault();
 
-    formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
-
     if (checkFormGenre()) {
+      formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
+
       RESULT_SCREENS[getRandomNumber(RESULT_SCREENS.length)]();
     }
   };
