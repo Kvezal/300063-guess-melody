@@ -1,6 +1,8 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import displayScreen from './functions/screenRender';
 import displayScreenGenre from './genre';
+import displayScreenResultTimeIsOver from './result-time-is-over';
+import timer from './timer';
 
 const markupScreenArtist = `
   <section class="main main--level main--level-artist">
@@ -73,6 +75,7 @@ const displayScreenArtist = () => {
     let target = evt.target;
 
     answersList.removeEventListener(`click`, answersListClickHandler);
+    window.clearInterval(artistTimerId);
 
     while (!target.classList.contains(`main-list`)) {
       if (target.classList.contains(`main-answer`)) {
@@ -86,6 +89,16 @@ const displayScreenArtist = () => {
 
   answersList.addEventListener(`click`, answersListClickHandler);
 
+
+  // Для демонстрации работы таймера
+  let artistTimer = timer(2);
+
+  let artistTimerId = window.setInterval(() => {
+    if (artistTimer.state) {
+      window.clearInterval(artistTimerId);
+      displayScreenResultTimeIsOver();
+    }
+  }, 250);
 };
 
 export default displayScreenArtist;

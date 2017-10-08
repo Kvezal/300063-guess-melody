@@ -3,6 +3,7 @@ import displayScreen from './functions/screenRender';
 import displayScreenResultWin from './result-win';
 import displayScreenResultTimeIsOver from './result-time-is-over';
 import displayScreenResultAttemptsEnded from './result-attempts-ended';
+import timer from './timer';
 
 const RESULT_SCREENS = [
   displayScreenResultWin,
@@ -111,11 +112,24 @@ const displayScreenGenre = () => {
     if (checkFormGenre()) {
       formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
 
+      window.clearInterval(genreTimerId);
+
       RESULT_SCREENS[getRandomNumber(RESULT_SCREENS.length)]();
     }
   };
 
   formGenre.addEventListener(`submit`, formGenreSubmitHandler);
+
+
+  // Для демонстрации работы таймера
+  let genreTimer = timer(3);
+
+  let genreTimerId = window.setInterval(() => {
+    if (genreTimer.state) {
+      window.clearInterval(genreTimerId);
+      displayScreenResultTimeIsOver();
+    }
+  }, 250);
 };
 
 export default displayScreenGenre;
