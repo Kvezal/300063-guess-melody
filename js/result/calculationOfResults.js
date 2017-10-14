@@ -15,11 +15,11 @@ const calculationOfResults = (arrayResults, currentResult) => {
 
   let placeOfPlayer;
 
-  for (let i = 0; i < numberOfPlayers; i++) {
-    if (arrayResults[i].id === currentResult.id) {
-      placeOfPlayer = numberOfPlayers - i;
+  arrayResults.forEach((item, index) => {
+    if (item.id === currentResult.id) {
+      placeOfPlayer = numberOfPlayers - index;
     }
-  }
+  });
 
   const betterThanOtherPlayer = (1 - placeOfPlayer / numberOfPlayers) * 100;
 
