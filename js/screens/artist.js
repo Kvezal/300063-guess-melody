@@ -1,36 +1,35 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import displayScreen from './functions/screenRender';
+import {displayScreen, displayElement} from './functions/screenRender';
 import displayScreenGenre from './genre';
 // import displayScreenResultTimeIsOver from './result-time-is-over';
 // import timer from './timer';
 
 import player from './player';
 import {artistGame} from './game';
+import {initialState} from './data';
+import {artistLevels} from './data';
 
-const markupScreenArtist = `
-  <section class="main main--level main--level-artist">
-    ${player}
-
-    <div class="main-wrap">
-      ${artistGame}
-    </div>
+const getMarkupScreenArtist =
+  `<section class="main main--level main--level-artist">
+    <div class="main-wrap"></div>
   </section>`;
 
-const displayScreenArtist = () => {
-  const screenArtist = getElementFromTemplate(markupScreenArtist);
+const displayScreenArtist = (state) => {
+  const screenArtist = getElementFromTemplate(getMarkupScreenArtist);
   displayScreen(screenArtist);
 
-  const answersList = document.querySelector(`.main-list`);
+  const mainWrap = document.querySelector(`.main-wrap`);
 
-  const answersListClickHandler = (evt) => {
+  const mainWrapClickHandler = (evt) => {
     let target = evt.target;
 
-    answersList.removeEventListener(`click`, answersListClickHandler);
+    mainWrap.removeEventListener(`click`, mainWrapClickHandler);
     //    window.clearInterval(artistTimerId);
 
     while (!target.classList.contains(`main-list`)) {
       if (target.classList.contains(`main-answer`)) {
-        displayScreenGenre();
+        displayScreenGenre(initialState);
+        player(initialState);
         return;
       }
 
@@ -38,8 +37,10 @@ const displayScreenArtist = () => {
     }
   };
 
-  answersList.addEventListener(`click`, answersListClickHandler);
+  mainWrap.addEventListener(`click`, mainWrapClickHandler);
 
+  player(initialState, mainWrap);
+  displayElement(artistGame(artistLevels[state.level]), mainWrap);
 
   // Для демонстрации работы таймера
 //  let artistTimer = timer(2);

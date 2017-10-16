@@ -23,7 +23,7 @@ const calculationOfResults = (arrayResults, currentResult) => {
 
   const betterThanOtherPlayer = (1 - placeOfPlayer / numberOfPlayers) * 100;
 
-  return `Вы заняли ${placeOfPlayer}-ое место из ${numberOfPlayers} игроков. Это лучше чем у ${betterThanOtherPlayer}% игроков`;
+  return `Вы заняли ${placeOfPlayer}-ое место из ${numberOfPlayers} игроков. Это&nbsp;лучше чем у&nbsp;${betterThanOtherPlayer}%&nbsp;игроков`;
 };
 
 export default calculationOfResults;

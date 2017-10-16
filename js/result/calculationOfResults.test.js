@@ -17,7 +17,7 @@ suite(`Function of calculationOfResults works correct`, () => {
       id: 5
     };
 
-    assert.strictEqual(calculationOfResults(arrayResults, currentResult), `Вы заняли 2-ое место из 5 игроков. Это лучше чем у 60% игроков`);
+    assert.strictEqual(calculationOfResults(arrayResults, currentResult), `Вы заняли 2-ое место из 5 игроков. Это&nbsp;лучше чем у&nbsp;60%&nbsp;игроков`);
 
     arrayResults = [
       {points: 20, amountOfMusic: 3, timeLeft: 200000, id: 1},
@@ -33,7 +33,7 @@ suite(`Function of calculationOfResults works correct`, () => {
       id: 5
     };
 
-    assert.strictEqual(calculationOfResults(arrayResults, currentResult), `Вы заняли 5-ое место из 5 игроков. Это лучше чем у 0% игроков`);
+    assert.strictEqual(calculationOfResults(arrayResults, currentResult), `Вы заняли 5-ое место из 5 игроков. Это&nbsp;лучше чем у&nbsp;0%&nbsp;игроков`);
   });
 
   test(`The player lost - the time is over`, () => {

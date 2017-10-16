@@ -1,5 +1,5 @@
-const timer = (time) => {
-  const timerObject = {
+const getTimer = (time) => {
+  const timer = {
     state: false,
     minutes: 0,
     seconds: 0,
@@ -7,19 +7,19 @@ const timer = (time) => {
     tick: () => {
       --time;
 
-      timer._minutes = Math.trunc(time / 60);
-      timer._seconds = time % 60;
+      timer.minutes = Math.trunc(time / 60);
+      timer.seconds = time % 60;
 
       if (time <= 0) {
         window.clearInterval(timerId);
-        timerObject.state = true;
+        timer.state = true;
       }
     }
   };
 
-  let timerId = window.setInterval(timerObject.tick, 1000);
+  let timerId = window.setInterval(timer.tick, 1000);
 
-  return timerObject;
+  return timer;
 };
 
-export default timer;
+export default getTimer;

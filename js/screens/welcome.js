@@ -1,6 +1,8 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import displayScreen from './functions/screenRender';
+import {displayScreen} from './functions/screenRender';
 import displayScreenArtist from './artist';
+
+import {initialState} from './data';
 
 const markupScreenWelcome = `
   <section class="main main--welcome">
@@ -25,7 +27,7 @@ const displayScreenWelcome = () => {
 
     buttonPlay.removeEventListener(`click`, buttonPlayClickHandler);
 
-    displayScreenArtist();
+    displayScreenArtist(initialState);
   };
 
   buttonPlay.addEventListener(`click`, buttonPlayClickHandler);

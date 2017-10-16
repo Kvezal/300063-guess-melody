@@ -1,11 +1,13 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import displayScreen from './functions/screenRender';
+import {displayScreen, displayElement} from './functions/screenRender';
 import displayScreenResultWin from './result-win';
 import displayScreenResultTimeIsOver from './result-time-is-over';
 import displayScreenResultAttemptsEnded from './result-attempts-ended';
 // import timer from './timer';
 import player from './player';
 import {genreGame} from './game';
+import {initialState} from './data';
+import {genreLevels} from './data';
 
 const RESULT_SCREENS = [
   displayScreenResultWin,
@@ -13,30 +15,31 @@ const RESULT_SCREENS = [
   displayScreenResultAttemptsEnded
 ];
 
-const markupScreenGenre = `
-  <section class="main main--level main--level-genre">
-    ${player}
-
-    <div class="main-wrap">
-      ${genreGame}
-    </div>
+const getMarkupScreenGenre =
+  `<section class="main main--level main--level-genre">
+    <div class="main-wrap"></div>
   </section>`;
 
-const displayScreenGenre = () => {
-  const screenGenre = getElementFromTemplate(markupScreenGenre);
+const displayScreenGenre = (state) => {
+  const screenGenre = getElementFromTemplate(getMarkupScreenGenre);
   displayScreen(screenGenre);
 
-  const answersList = document.querySelectorAll(`input[name="answer"]`);
-  const formGenre = document.querySelector(`.genre`);
+  const mainWrap = document.querySelector(`.main-wrap`);
+  player(initialState, mainWrap);
+  displayElement(genreGame(genreLevels[state.level]), mainWrap);
 
-  const checkFormGenre = () => Array.prototype.some.call(answersList, (it) => it.checked);
+  const checkFormGenre = (list) => Array.prototype.some.call(list, (it) => it.checked);
 
   const getRandomNumber = (max) => Math.floor(Math.random() * max);
+
+  const formGenre = document.querySelector(`.genre`);
 
   const formGenreSubmitHandler = (evt) => {
     evt.preventDefault();
 
-    if (checkFormGenre()) {
+    const answersList = document.querySelectorAll(`input[name="answer"]`);
+
+    if (checkFormGenre(answersList)) {
       formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
 
       //      window.clearInterval(genreTimerId);
@@ -46,7 +49,6 @@ const displayScreenGenre = () => {
   };
 
   formGenre.addEventListener(`submit`, formGenreSubmitHandler);
-
 
   // Для демонстрации работы таймера
 //  let genreTimer = timer(3);

@@ -1,4 +1,4 @@
-import timer from './timer';
+import getTimer from './timer';
 
 const getAmountMistakesTemplate = (amountMistakes) => {
   let amountMistakesTemplate = ``;
@@ -10,13 +10,13 @@ const getAmountMistakesTemplate = (amountMistakes) => {
   return amountMistakesTemplate;
 };
 
-const getTimerTemplate = () => {
-  let minutes = playerTimer.minutes;
+const getTimerTemplate = (timer) => {
+  let minutes = timer.minutes;
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
 
-  let seconds = playerTimer.seconds;
+  let seconds = timer.seconds;
   if (seconds < 10) {
     seconds = `0${seconds}`;
   }
@@ -28,21 +28,29 @@ const getTimerTemplate = () => {
   );
 };
 
-const playerTimer = timer(300);
+let playerTimer;
 
-const player =
-  `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-    <circle
-      cx="390" cy="390" r="370"
-      class="timer-line"
-      style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+const player = (state) => {
+  playerTimer = getTimer(state.time);
 
-    <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-      ${getTimerTemplate()}
-    </div>
-  </svg>
-  <div class="main-mistakes">
-    ${getAmountMistakesTemplate(3)}
-  </div>`;
+  const mainWrap = document.querySelector(`.main-wrap`);
+
+  const playerTemplate =
+    `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+      <circle
+        cx="390" cy="390" r="370"
+        class="timer-line"
+        style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+
+      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
+        ${getTimerTemplate(playerTimer)}
+      </div>
+    </svg>
+    <div class="main-mistakes">
+      ${getAmountMistakesTemplate(state.lives)}
+    </div>`;
+
+  mainWrap.insertAdjacentHTML(`beforeBegin`, playerTemplate);
+};
 
 export default player;
