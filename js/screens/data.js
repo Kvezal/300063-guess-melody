@@ -6,11 +6,26 @@ const initialState = {
   time: 300
 };
 
-const artistLevels = [
+const currentAnswers = [
+
+];
+
+const GANRES = {
+  'Jazz': `джаз`,
+  'Rock': `рок`,
+  'Country': `кантри`,
+  'R&B': `рнб`,
+  'Pop': `поп`,
+  'Electronic': `электронные`
+};
+
+const data = [
   {
     question: audioData[0].src,
+    nextLevel: 1,
+    type: `artist`,
 
-    answers: new Set([
+    answers: [
       {
         artist: audioData[0].artist,
         image: audioData[0].image,
@@ -26,45 +41,15 @@ const artistLevels = [
         image: audioData[2].image,
         isCorrect: false
       }
-    ])
+    ]
   },
-  {
-    question: audioData[4].src,
 
-    answers: new Set([
-      {
-        artist: audioData[3].artist,
-        image: audioData[3].image,
-        isCorrect: false
-      },
-      {
-        artist: audioData[4].artist,
-        image: audioData[4].image,
-        isCorrect: true
-      },
-      {
-        artist: audioData[5].artist,
-        image: audioData[5].image,
-        isCorrect: false
-      }
-    ])
-  }
-];
-
-const GANRES = {
-  'Jazz': `джаз`,
-  'Rock': `рок`,
-  'Country': `кантри`,
-  'R&B': `рнб`,
-  'Pop': `поп`,
-  'Electronic': `электронные`
-};
-
-const genreLevels = [
   {
     question: `Выберите ${GANRES[audioData[1].genre]} треки`,
+    nextLevel: 2,
+    type: `genre`,
 
-    answers: new Set([
+    answers: [
       {
         genre: audioData[0].genre,
         src: audioData[0].src,
@@ -85,12 +70,39 @@ const genreLevels = [
         src: audioData[3].src,
         isCorrect: false
       }
-    ])
+    ]
   },
+
+  {
+    question: audioData[4].src,
+    nextLevel: 3,
+    type: `artist`,
+
+    answers: [
+      {
+        artist: audioData[3].artist,
+        image: audioData[3].image,
+        isCorrect: false
+      },
+      {
+        artist: audioData[4].artist,
+        image: audioData[4].image,
+        isCorrect: true
+      },
+      {
+        artist: audioData[5].artist,
+        image: audioData[5].image,
+        isCorrect: false
+      }
+    ]
+  },
+
   {
     question: `Выберите ${GANRES[audioData[5].genre]} треки`,
+    nextLevel: 0,
+    type: `genre`,
 
-    answers: new Set([
+    answers: [
       {
         genre: audioData[2].genre,
         src: audioData[2].src,
@@ -111,7 +123,7 @@ const genreLevels = [
         src: audioData[5].src,
         isCorrect: true
       }
-    ])
+    ]
   }
 ];
 
@@ -127,4 +139,4 @@ const result = {
   }
 };
 
-export {initialState, artistLevels, genreLevels, result};
+export {initialState, data, result, currentAnswers};

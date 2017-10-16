@@ -1,6 +1,6 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayScreen} from './functions/screenRender';
-import displayScreenArtist from './artist';
+import displayScreenGame from './game';
 
 import {initialState} from './data';
 
@@ -27,7 +27,7 @@ const displayScreenWelcome = () => {
 
     buttonPlay.removeEventListener(`click`, buttonPlayClickHandler);
 
-    displayScreenArtist(initialState);
+    displayScreenGame(initialState);
   };
 
   buttonPlay.addEventListener(`click`, buttonPlayClickHandler);

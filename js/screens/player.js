@@ -1,4 +1,8 @@
+import getElementFromTemplate from './functions/newDOMElement';
+import {displayElement} from './functions/screenRender';
 import getTimer from './timer';
+
+import displayScreenResultTimeIsOver from './result-time-is-over';
 
 const getAmountMistakesTemplate = (amountMistakes) => {
   let amountMistakesTemplate = ``;
@@ -10,30 +14,34 @@ const getAmountMistakesTemplate = (amountMistakes) => {
   return amountMistakesTemplate;
 };
 
-const getTimerTemplate = (timer) => {
-  let minutes = timer.minutes;
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
+const displayTimer = (timer) => {
+  const timerValue = document.querySelector(`.timer-value`);
 
-  let seconds = timer.seconds;
-  if (seconds < 10) {
-    seconds = `0${seconds}`;
-  }
+  window.timer = window.setInterval(() => {
+    let minutes = timer.minutes;
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
 
-  return (
-    `<span class="timer-value-mins">${minutes}</span><!--
-      --><span class="timer-value-dots">:</span><!--
-      --><span class="timer-value-secs">${seconds}</span>`
-  );
+    let seconds = timer.seconds;
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+
+    const timerTemplate =
+      `<span class="timer-value-mins">${minutes}</span><!--
+        --><span class="timer-value-dots">:</span><!--
+        --><span class="timer-value-secs">${seconds}</span>`;
+
+    displayElement(getElementFromTemplate(timerTemplate), timerValue);
+    if (timer.state) {
+      displayScreenResultTimeIsOver();
+    }
+  });
 };
 
-let playerTimer;
-
 const player = (state) => {
-  playerTimer = getTimer(state.time);
-
-  const mainWrap = document.querySelector(`.main-wrap`);
+  const playerTimer = getTimer(state.time);
 
   const playerTemplate =
     `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -42,15 +50,40 @@ const player = (state) => {
         class="timer-line"
         style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
 
-      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-        ${getTimerTemplate(playerTimer)}
-      </div>
+      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml"></div>
     </svg>
     <div class="main-mistakes">
       ${getAmountMistakesTemplate(state.lives)}
     </div>`;
 
+  const mainWrap = document.querySelector(`.main-wrap`);
   mainWrap.insertAdjacentHTML(`beforeBegin`, playerTemplate);
+
+  displayTimer(playerTimer);
 };
+
+//const player = (state) => {
+//  playerTimer = getTimer(state.time);
+//
+//  const playerTemplate =
+//    `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+//      <circle
+//        cx="390" cy="390" r="370"
+//        class="timer-line"
+//        style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+//
+//      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml"></div>
+//    </svg>
+//    <div class="main-mistakes">
+//      ${getAmountMistakesTemplate(state.lives)}
+//    </div>`;
+//
+//  const mainWrap = document.querySelector(`.main-wrap`);
+//  mainWrap.insertAdjacentHTML(`beforeBegin`, playerTemplate);
+//
+//  const timerValue = document.querySelector(`.timer-value`);
+//
+//  displayElement(getTimerTemplateMarkup(playerTimer), timerValue);
+//};
 
 export default player;

@@ -17,6 +17,8 @@ const markupScreenResultWin = `
 const displayScreenResultWin = () => {
   const screenResultWin = getElementFromTemplate(markupScreenResultWin);
 
+  window.clearInterval(window.timer);
+
   displayScreen(screenResultWin);
 
   addButtonReplayListener();

@@ -1,36 +1,57 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import {displayScreen, displayElement} from './functions/screenRender';
+import {displayElement} from './functions/screenRender';
+import changeLevelScreen from './changeLevelScreen';
+import {data, currentAnswers} from './data';
+
 import displayScreenResultWin from './result-win';
-import displayScreenResultTimeIsOver from './result-time-is-over';
-import displayScreenResultAttemptsEnded from './result-attempts-ended';
-// import timer from './timer';
-import player from './player';
-import {genreGame} from './game';
-import {initialState} from './data';
-import {genreLevels} from './data';
 
-const RESULT_SCREENS = [
-  displayScreenResultWin,
-  displayScreenResultTimeIsOver,
-  displayScreenResultAttemptsEnded
-];
+const getGenreAnswerOptions = (answers) => {
+  return [...answers].map((item, index) => {
+    return (
+      `<div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <audio src="${item.src}"></audio>
+            <button class="player-control player-control--pause"></button>
+            <div class="player-track">
+              <span class="player-status"></span>
+            </div>
+          </div>
+        </div>
+        <input type="checkbox" name="answer" value="answer-${index}" id="a-${index}">
+        <label class="genre-answer-check" for="a-${index}"></label>
+      </div>`
+    );
+  }).join(``);
+};
 
-const getMarkupScreenGenre =
-  `<section class="main main--level main--level-genre">
-    <div class="main-wrap"></div>
-  </section>`;
+const genreGame = (level) =>
+  getElementFromTemplate(`<h2 class="title">${level.question}</h2>
+  <form class="genre">
+    ${getGenreAnswerOptions(level.answers)}
+    <button class="genre-answer-send" type="submit">Ответить</button>
+  </form>`);
 
-const displayScreenGenre = (state) => {
-  const screenGenre = getElementFromTemplate(getMarkupScreenGenre);
-  displayScreen(screenGenre);
+const getCheckedFormElement = (list, level) => {
+  const result = [];
 
+  Array.prototype.forEach.call(list, (it, index) => {
+    if (it.checked) {
+      result.push(data[level].answers[index].isCorrect === it.checked);
+    }
+    return false;
+  });
+
+  return result;
+};
+
+const displayScreenGenre = (level) => {
   const mainWrap = document.querySelector(`.main-wrap`);
-  player(initialState, mainWrap);
-  displayElement(genreGame(genreLevels[state.level]), mainWrap);
 
-  const checkFormGenre = (list) => Array.prototype.some.call(list, (it) => it.checked);
+  displayElement(genreGame(data[level]), mainWrap);
 
-  const getRandomNumber = (max) => Math.floor(Math.random() * max);
+  const currentLevel = data[level];
+  const nextLevel = currentLevel.nextLevel;
 
   const formGenre = document.querySelector(`.genre`);
 
@@ -39,26 +60,22 @@ const displayScreenGenre = (state) => {
 
     const answersList = document.querySelectorAll(`input[name="answer"]`);
 
-    if (checkFormGenre(answersList)) {
+    const checkedFormElement = getCheckedFormElement(answersList, level);
+
+    if (checkedFormElement.length) {
+      currentAnswers.push(checkedFormElement.every((it) => it));
+      // console.log(currentAnswers);
+      changeLevelScreen(data[nextLevel].type, nextLevel);
+
       formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
 
-      //      window.clearInterval(genreTimerId);
-
-      RESULT_SCREENS[getRandomNumber(RESULT_SCREENS.length)]();
+      if (currentAnswers.length >= 10) {
+        displayScreenResultWin();
+      }
     }
   };
 
   formGenre.addEventListener(`submit`, formGenreSubmitHandler);
-
-  // Для демонстрации работы таймера
-//  let genreTimer = timer(3);
-//
-//  let genreTimerId = window.setInterval(() => {
-//    if (genreTimer.state) {
-//      window.clearInterval(genreTimerId);
-//      displayScreenResultTimeIsOver();
-//    }
-//  }, 250);
 };
 
 export default displayScreenGenre;
