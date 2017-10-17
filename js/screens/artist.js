@@ -1,7 +1,7 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayElement} from './functions/screenRender';
 import changeLevelScreen from './changeLevelScreen';
-import {initialState, data, currentAnswers} from './data';
+import {currentState, data, currentAnswers} from './data';
 import pushCurrentAnswer from './pushCurrentAnswer';
 
 import displayScreenResult from './result';
@@ -40,10 +40,10 @@ const artistGame = (level) =>
 const displayScreenArtist = () => {
   const mainWrap = document.querySelector(`.main-wrap`);
 
-  displayElement(artistGame(data[initialState.level]), mainWrap);
+  displayElement(artistGame(data[currentState.level]), mainWrap);
 
-  const currentLevel = data[initialState.level];
-  initialState.level = currentLevel.nextLevel;
+  const currentLevel = data[currentState.level];
+  currentState.level = currentLevel.nextLevel;
 
   let time = new Date();
 
@@ -57,12 +57,12 @@ const displayScreenArtist = () => {
 
         mainWrap.removeEventListener(`click`, mainWrapClickHandler);
 
-        changeLevelScreen(data[initialState.level].type);
+        changeLevelScreen(data[currentState.level].type);
 
         pushCurrentAnswer(answer, time);
 
         if (!answer) {
-          displayAmountMistakes(--initialState.lives);
+          displayAmountMistakes(--currentState.lives);
         }
 
         if (currentAnswers.length >= 10) {

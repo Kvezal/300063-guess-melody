@@ -1,7 +1,7 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayElement} from './functions/screenRender';
 import changeLevelScreen from './changeLevelScreen';
-import {initialState, data, currentAnswers} from './data';
+import {currentState, data, currentAnswers} from './data';
 import pushCurrentAnswer from './pushCurrentAnswer';
 
 import displayScreenResult from './result';
@@ -50,9 +50,9 @@ const getCheckedFormElement = (list, level) => {
 const displayScreenGenre = () => {
   const mainWrap = document.querySelector(`.main-wrap`);
 
-  displayElement(genreGame(data[initialState.level]), mainWrap);
+  displayElement(genreGame(data[currentState.level]), mainWrap);
 
-  const currentLevel = data[initialState.level];
+  const currentLevel = data[currentState.level];
 
   const formGenre = document.querySelector(`.genre`);
 
@@ -63,20 +63,20 @@ const displayScreenGenre = () => {
 
     const answersList = document.querySelectorAll(`input[name="answer"]`);
 
-    const checkedFormElement = getCheckedFormElement(answersList, initialState.level);
-
-    initialState.level = currentLevel.nextLevel;
+    const checkedFormElement = getCheckedFormElement(answersList, currentState.level);
 
     if (checkedFormElement.length) {
+      currentState.level = currentLevel.nextLevel;
+
       const answer = checkedFormElement.every((it) => it);
       pushCurrentAnswer(answer, time);
 
       formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
 
-      changeLevelScreen(data[initialState.level].type);
+      changeLevelScreen(data[currentState.level].type);
 
       if (!answer) {
-        displayAmountMistakes(--initialState.lives);
+        displayAmountMistakes(--currentState.lives);
       }
 
       if (currentAnswers.length >= 10) {

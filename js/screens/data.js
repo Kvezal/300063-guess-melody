@@ -6,6 +6,12 @@ const initialState = {
   time: 300
 };
 
+const currentState = {
+  level: initialState.level,
+  lives: initialState.lives,
+  time: initialState.time
+};
+
 const currentAnswers = [
   {
     answer: true,
@@ -150,4 +156,4 @@ const results = {
   }
 };
 
-export {initialState, data, results, arrayResults, currentAnswers};
+export {initialState, currentState, data, results, arrayResults, currentAnswers};

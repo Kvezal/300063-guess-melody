@@ -1,22 +1,22 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayElement} from './functions/screenRender';
 import getTimer from './timer';
-import {initialState} from './data';
+import {currentState} from './data';
 
 import displayScreenResult from './result';
 
 const displayTimer = () => {
-  const timer = getTimer(initialState.time);
+  getTimer();
 
   const timerValue = document.querySelector(`.timer-value`);
 
-  initialState.timerId = window.setInterval(() => {
-    let minutes = timer.minutes;
+  currentState.timerId = window.setInterval(() => {
+    let minutes = currentState.timer.minutes;
     if (minutes < 10) {
       minutes = `0${minutes}`;
     }
 
-    let seconds = timer.seconds;
+    let seconds = currentState.timer.seconds;
     if (seconds < 10) {
       seconds = `0${seconds}`;
     }
@@ -27,7 +27,7 @@ const displayTimer = () => {
         --><span class="timer-value-secs">${seconds}</span>`;
 
     displayElement(getElementFromTemplate(timerTemplate), timerValue);
-    if (timer.state) {
+    if (currentState.timer.state) {
       displayScreenResult(`timeIsOver`);
     }
   });
