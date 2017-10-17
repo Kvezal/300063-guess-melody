@@ -16,7 +16,7 @@ const displayScreenGame = (state) => {
   currentAnswers.splice(0, 10);
 
   player(state);
-  changeLevelScreen(data[state.level].type, state.level);
+  changeLevelScreen(data[state.level].type);
 };
 
 export default displayScreenGame;

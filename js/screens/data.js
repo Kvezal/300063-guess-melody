@@ -7,7 +7,18 @@ const initialState = {
 };
 
 const currentAnswers = [
+  {
+    answer: true,
+    time: 30
+  }
+];
 
+// Массив arrayResults для тестирования статистики
+const arrayResults = [
+  {points: 20, lives: 3, timeLeft: 200000, id: 1},
+  {points: 10, lives: 1, timeLeft: 100000, id: 4},
+  {points: 15, lives: 2, timeLeft: 100000, id: 2},
+  {points: 12, lives: 3, timeLeft: 30000, id: 3}
 ];
 
 const GANRES = {
@@ -127,7 +138,7 @@ const data = [
   }
 ];
 
-const result = {
+const results = {
   win: {
     title: `Вы настоящий меломан!`
   },
@@ -139,4 +150,4 @@ const result = {
   }
 };
 
-export {initialState, data, result, currentAnswers};
+export {initialState, data, results, arrayResults, currentAnswers};

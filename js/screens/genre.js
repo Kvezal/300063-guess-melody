@@ -1,9 +1,11 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayElement} from './functions/screenRender';
 import changeLevelScreen from './changeLevelScreen';
-import {data, currentAnswers} from './data';
+import {initialState, data, currentAnswers} from './data';
+import pushCurrentAnswer from './pushCurrentAnswer';
 
-import displayScreenResultWin from './result-win';
+import displayScreenResult from './result';
+import displayAmountMistakes from './displayAmountMistakes';
 
 const getGenreAnswerOptions = (answers) => {
   return [...answers].map((item, index) => {
@@ -45,32 +47,40 @@ const getCheckedFormElement = (list, level) => {
   return result;
 };
 
-const displayScreenGenre = (level) => {
+const displayScreenGenre = () => {
   const mainWrap = document.querySelector(`.main-wrap`);
 
-  displayElement(genreGame(data[level]), mainWrap);
+  displayElement(genreGame(data[initialState.level]), mainWrap);
 
-  const currentLevel = data[level];
-  const nextLevel = currentLevel.nextLevel;
+  const currentLevel = data[initialState.level];
 
   const formGenre = document.querySelector(`.genre`);
+
+  const time = new Date();
 
   const formGenreSubmitHandler = (evt) => {
     evt.preventDefault();
 
     const answersList = document.querySelectorAll(`input[name="answer"]`);
 
-    const checkedFormElement = getCheckedFormElement(answersList, level);
+    const checkedFormElement = getCheckedFormElement(answersList, initialState.level);
+
+    initialState.level = currentLevel.nextLevel;
 
     if (checkedFormElement.length) {
-      currentAnswers.push(checkedFormElement.every((it) => it));
-      // console.log(currentAnswers);
-      changeLevelScreen(data[nextLevel].type, nextLevel);
+      const answer = checkedFormElement.every((it) => it);
+      pushCurrentAnswer(answer, time);
 
       formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
 
+      changeLevelScreen(data[initialState.level].type);
+
+      if (!answer) {
+        displayAmountMistakes(--initialState.lives);
+      }
+
       if (currentAnswers.length >= 10) {
-        displayScreenResultWin();
+        displayScreenResult(`win`);
       }
     }
   };

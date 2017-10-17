@@ -3,7 +3,7 @@ const calculationOfResults = (arrayResults, currentResult) => {
     return `Время вышло! Вы не успели отгадать все мелодии`;
   }
 
-  if (currentResult.amountOfMusic < 0) {
+  if (currentResult.lives < 0) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   }
 
@@ -23,7 +23,7 @@ const calculationOfResults = (arrayResults, currentResult) => {
 
   const betterThanOtherPlayer = (1 - placeOfPlayer / numberOfPlayers) * 100;
 
-  return `Вы заняли ${placeOfPlayer}-ое место из ${numberOfPlayers} игроков. Это&nbsp;лучше чем у&nbsp;${betterThanOtherPlayer}%&nbsp;игроков`;
+  return `<span class="main-comparison">Вы заняли ${placeOfPlayer}-ое место из ${numberOfPlayers} игроков. Это&nbsp;лучше чем у&nbsp;${betterThanOtherPlayer}%&nbsp;игроков</span>`;
 };
 
 export default calculationOfResults;

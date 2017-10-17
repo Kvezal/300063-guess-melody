@@ -1,13 +1,13 @@
 import displayScreenArtist from './artist';
 import displayScreenGenre from './genre';
 
-const changeLevelScreen = (type, level) => {
+const changeLevelScreen = (type, timerId) => {
   if (type === `artist`) {
-    displayScreenArtist(level);
+    displayScreenArtist(timerId);
   }
 
   if (type === `genre`) {
-    displayScreenGenre(level);
+    displayScreenGenre(timerId);
   }
 };
 
