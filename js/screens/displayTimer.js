@@ -6,11 +6,12 @@ import {currentState} from './data';
 import displayScreenResult from './result';
 
 const displayTimer = () => {
-  getTimer();
+  currentState.timer = getTimer(currentState.time);
 
   const timerValue = document.querySelector(`.timer-value`);
 
-  currentState.timerId = window.setInterval(() => {
+  currentState.timer.id = window.setInterval(() => {
+    currentState.timer.tick();
 
     const timerTemplate =
       `<span class="timer-value-mins">${currentState.timer.minutes}</span><!--
