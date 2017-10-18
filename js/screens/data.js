@@ -1,4 +1,5 @@
 import audioData from './audioData';
+import setCurrentState from './setCurrentState';
 
 const initialState = {
   level: 0,
@@ -6,11 +7,8 @@ const initialState = {
   time: 300
 };
 
-const currentState = {
-  level: initialState.level,
-  lives: initialState.lives,
-  time: initialState.time
-};
+const currentState = {};
+setCurrentState();
 
 const currentAnswers = [
   {

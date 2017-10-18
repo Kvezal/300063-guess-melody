@@ -1,9 +1,10 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayScreen} from './functions/screenRender';
 import addButtonReplayListener from './buttonReplay';
-import {initialState, currentState, results, currentAnswers, arrayResults} from './data';
+import {currentState, results, currentAnswers, arrayResults} from './data';
 import calculationOfResults from '../result/calculationOfResults';
 import countPoints from '../result/countPoints';
+import setCurrentState from './setCurrentState';
 
 const markupScreenResult = (screen, currentResult) => `
   <section class="main main--result">
@@ -23,7 +24,7 @@ const displayScreenResult = (screen) => {
     points: counterPoints.points,
     numberOfQuickAnswers: counterPoints.numberOfQuickAnswers,
     lives: currentState.lives,
-    timeLeft: initialState.time - currentState.time,
+    timeLeft: currentState.time - currentState.timer.time,
     id: arrayResults.length + 1
   };
 
@@ -37,11 +38,7 @@ const displayScreenResult = (screen) => {
 
   addButtonReplayListener();
 
-  for (const key in initialState) {
-    if (initialState.hasOwnProperty(key)) {
-      currentState[key] = initialState[key];
-    }
-  }
+  setCurrentState();
 };
 
 export default displayScreenResult;
