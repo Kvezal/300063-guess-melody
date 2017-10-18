@@ -1,17 +1,24 @@
 import {currentState} from './data';
 
-const getTimer = () => {
+const getTimer = (time) => {
   currentState.timer = {
     state: false,
-    minutes: 0,
-    seconds: 0,
-    id: 0,
 
-    tick: () => {
+    tick() {
       --currentState.time;
 
-      currentState.timer.minutes = Math.trunc(currentState.time / 60);
-      currentState.timer.seconds = currentState.time % 60;
+      let minutes = Math.trunc(currentState.time / 60);
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+
+      let seconds = currentState.time % 60;
+      if (seconds < 10) {
+        seconds = `0${seconds}`;
+      }
+
+      currentState.timer.minutes = minutes;
+      currentState.timer.seconds = seconds;
 
       if (currentState.time <= 0) {
         window.clearInterval(currentState.timer.id);
