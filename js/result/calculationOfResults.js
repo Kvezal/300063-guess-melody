@@ -1,10 +1,12 @@
+import {initialState} from '../screens/data';
+
 const calculationOfResults = (arrayResults, currentResult) => {
   if (currentResult.timeLeft <= 0) {
-    return `Время вышло! Вы не успели отгадать все мелодии`;
+    return `<div class="main-stat">Время вышло!<br>Вы не успели отгадать все мелодии</div>`;
   }
 
-  if (currentResult.amountOfMusic < 0) {
-    return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+  if (currentResult.lives <= 0) {
+    return `<div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>`;
   }
 
   arrayResults.push(currentResult);
@@ -15,15 +17,24 @@ const calculationOfResults = (arrayResults, currentResult) => {
 
   let placeOfPlayer;
 
-  for (let i = 0; i < numberOfPlayers; i++) {
-    if (arrayResults[i].id === currentResult.id) {
-      placeOfPlayer = numberOfPlayers - i;
+  arrayResults.forEach((item, index) => {
+    if (item.id === currentResult.id) {
+      placeOfPlayer = numberOfPlayers - index;
     }
-  }
+  });
 
   const betterThanOtherPlayer = (1 - placeOfPlayer / numberOfPlayers) * 100;
+  const mistakes = initialState.lives - currentResult.lives;
+  const minutes = Math.floor(currentResult.timeLeft / 60);
+  const seconds = currentResult.timeLeft % 60;
 
-  return `Вы заняли ${placeOfPlayer}-ое место из ${numberOfPlayers} игроков. Это лучше чем у ${betterThanOtherPlayer}% игроков`;
+  return (
+    `<div class="main-stat">За&nbsp;${minutes}&nbsp;минуты и ${seconds}&nbsp;секунд
+      <br>вы&nbsp;набрали ${currentResult.points} баллов (${currentResult.numberOfQuickAnswers} быстрых)
+      <br>совершив ${mistakes} ошибки
+    </div>
+    <span class="main-comparison">Вы заняли ${placeOfPlayer}-е место из ${numberOfPlayers} игроков. Это&nbsp;лучше чем у&nbsp;${betterThanOtherPlayer}%&nbsp;игроков</span>`
+  );
 };
 
 export default calculationOfResults;

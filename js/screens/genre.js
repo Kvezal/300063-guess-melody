@@ -1,135 +1,91 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import displayScreen from './functions/screenRender';
-import displayScreenResultWin from './result-win';
-import displayScreenResultTimeIsOver from './result-time-is-over';
-import displayScreenResultAttemptsEnded from './result-attempts-ended';
-import timer from './timer';
+import {displayElement} from './functions/screenRender';
+import changeLevelScreen from './changeLevelScreen';
+import {currentState, data, currentAnswers} from './data';
+import pushCurrentAnswer from './pushCurrentAnswer';
 
-const RESULT_SCREENS = [
-  displayScreenResultWin,
-  displayScreenResultTimeIsOver,
-  displayScreenResultAttemptsEnded
-];
+import displayScreenResult from './result';
+import displayAmountMistakes from './displayAmountMistakes';
 
-const markupScreenGenre = `
-  <section class="main main--level main--level-genre">
-    <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-      <circle
-        cx="390" cy="390" r="370"
-        class="timer-line"
-        style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
-
-      <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-        <span class="timer-value-mins">05</span><!--
-        --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">00</span>
-      </div>
-    </svg>
-    <div class="main-mistakes">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-      <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    </div>
-
-    <div class="main-wrap">
-      <h2 class="title">Выберите инди-рок треки</h2>
-      <form class="genre">
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--pause"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
+const getGenreAnswerOptions = (answers) => {
+  return [...answers].map((item, index) => {
+    return (
+      `<div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <audio src="${item.src}"></audio>
+            <button class="player-control player-control--pause"></button>
+            <div class="player-track">
+              <span class="player-status"></span>
             </div>
           </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-1">
-          <label class="genre-answer-check" for="a-1"></label>
         </div>
+        <input type="checkbox" name="answer" value="answer-${index}" id="a-${index}">
+        <label class="genre-answer-check" for="a-${index}"></label>
+      </div>`
+    );
+  }).join(``);
+};
 
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--play"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-2">
-          <label class="genre-answer-check" for="a-2"></label>
-        </div>
+const genreGame = (level) =>
+  getElementFromTemplate(`<h2 class="title">${level.question}</h2>
+  <form class="genre">
+    ${getGenreAnswerOptions(level.answers)}
+    <button class="genre-answer-send" type="submit">Ответить</button>
+  </form>`);
 
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--play"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-3">
-          <label class="genre-answer-check" for="a-3"></label>
-        </div>
+const getCheckedFormElement = (list, level) => {
+  const result = [];
 
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <audio></audio>
-              <button class="player-control player-control--play"></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-1" id="a-4">
-          <label class="genre-answer-check" for="a-4"></label>
-        </div>
+  Array.prototype.forEach.call(list, (it, index) => {
+    if (it.checked) {
+      result.push(data[level].answers[index].isCorrect === it.checked);
+    }
+    return false;
+  });
 
-        <button class="genre-answer-send" type="submit">Ответить</button>
-      </form>
-    </div>
-  </section>`;
+  return result;
+};
 
 const displayScreenGenre = () => {
-  const screenGenre = getElementFromTemplate(markupScreenGenre);
-  displayScreen(screenGenre);
+  const mainWrap = document.querySelector(`.main-wrap`);
 
-  const answersList = document.querySelectorAll(`input[name="answer"]`);
+  displayElement(genreGame(data[currentState.level]), mainWrap);
+
+  const currentLevel = data[currentState.level];
+
   const formGenre = document.querySelector(`.genre`);
 
-  const checkFormGenre = () => Array.prototype.some.call(answersList, (it) => it.checked);
-
-  const getRandomNumber = (max) => Math.floor(Math.random() * max);
+  const time = new Date();
 
   const formGenreSubmitHandler = (evt) => {
     evt.preventDefault();
 
-    if (checkFormGenre()) {
+    const answersList = document.querySelectorAll(`input[name="answer"]`);
+
+    const checkedFormElement = getCheckedFormElement(answersList, currentState.level);
+
+    if (checkedFormElement.length) {
+      currentState.level = currentLevel.nextLevel;
+
+      const answer = checkedFormElement.every((it) => it);
+      pushCurrentAnswer(answer, time);
+
       formGenre.removeEventListener(`submit`, formGenreSubmitHandler);
 
-      window.clearInterval(genreTimerId);
+      changeLevelScreen(data[currentState.level].type);
 
-      RESULT_SCREENS[getRandomNumber(RESULT_SCREENS.length)]();
+      if (!answer) {
+        displayAmountMistakes(--currentState.lives);
+      }
+
+      if (currentAnswers.length >= 10) {
+        displayScreenResult(`win`);
+      }
     }
   };
 
   formGenre.addEventListener(`submit`, formGenreSubmitHandler);
-
-
-  // Для демонстрации работы таймера
-  let genreTimer = timer(3);
-
-  let genreTimerId = window.setInterval(() => {
-    if (genreTimer.state) {
-      window.clearInterval(genreTimerId);
-      displayScreenResultTimeIsOver();
-    }
-  }, 250);
 };
 
 export default displayScreenGenre;

@@ -1,25 +1,32 @@
-const timer = (time) => {
-  const timerObject = {
+// import {currentState} from './data';
+
+const getTimer = (time) => {
+  return {
     state: false,
-    minutes: 0,
-    seconds: 0,
+    time,
 
-    tick: () => {
-      --time;
+    tick() {
+      --this.time;
 
-      timer._minutes = Math.trunc(time / 60);
-      timer._seconds = time % 60;
+      let minutes = Math.trunc(this.time / 60);
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
 
-      if (time <= 0) {
-        window.clearInterval(timerId);
-        timerObject.state = true;
+      let seconds = this.time % 60;
+      if (seconds < 10) {
+        seconds = `0${seconds}`;
+      }
+
+      this.minutes = minutes;
+      this.seconds = seconds;
+
+      if (this.time <= 0) {
+        window.clearInterval(this.id);
+        this.state = true;
       }
     }
   };
-
-  let timerId = window.setInterval(timerObject.tick, 1000);
-
-  return timerObject;
 };
 
-export default timer;
+export default getTimer;

@@ -1,5 +1,5 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import displayScreen from './functions/screenRender';
+import {displayScreen} from './functions/screenRender';
 import addButtonReplayListener from './buttonReplay';
 
 const markupScreenResultAttemptsEnded = `

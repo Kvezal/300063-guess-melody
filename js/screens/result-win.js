@@ -1,6 +1,7 @@
 import getElementFromTemplate from './functions/newDOMElement';
-import displayScreen from './functions/screenRender';
+import {displayScreen} from './functions/screenRender';
 import addButtonReplayListener from './buttonReplay';
+import {initialState} from './data';
 
 const markupScreenResultWin = `
   <section class="main main--result">
@@ -16,6 +17,8 @@ const markupScreenResultWin = `
 
 const displayScreenResultWin = () => {
   const screenResultWin = getElementFromTemplate(markupScreenResultWin);
+
+  window.clearInterval(initialState.timerId);
 
   displayScreen(screenResultWin);
 

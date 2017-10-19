@@ -1,14 +1,18 @@
-const appDisplay = document.querySelector(`.app .main`);
+const appDisplay = document.querySelector(`.app`);
 
-const clearDisplay = () => {
-  while (appDisplay.firstChild) {
-    appDisplay.removeChild(appDisplay.firstChild);
+const clearDisplay = (parent) => {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
   }
 };
 
-const renderDisplay = (screen) => {
-  clearDisplay();
-  appDisplay.appendChild(screen);
+const displayElement = (element, parent) => {
+  clearDisplay(parent);
+  parent.appendChild(element);
 };
 
-export default renderDisplay;
+const displayScreen = (screen) => {
+  displayElement(screen, appDisplay);
+};
+
+export {displayScreen, displayElement};

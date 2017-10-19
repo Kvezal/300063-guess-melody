@@ -1,14 +1,16 @@
-const countPoints = (answers, amountOfMusic) => {
+const countPoints = (answers, lives) => {
   const numberAnswers = 10;
 
-  if (answers.length < numberAnswers || amountOfMusic < 0) {
+  if (answers.length < numberAnswers || lives <= 0) {
     return -1;
   }
 
-  const fastTime = 30000;
+  const fastTime = 30;
 
-  return answers.reduce((sum, it) => {
+  let numberOfQuickAnswers = 0;
+  const points = answers.reduce((sum, it) => {
     if (it.answer && it.time < fastTime) {
+      numberOfQuickAnswers++;
       return sum + 2;
     }
 
@@ -18,6 +20,8 @@ const countPoints = (answers, amountOfMusic) => {
 
     return sum - 2;
   }, 0);
+
+  return {numberOfQuickAnswers, points};
 };
 
 export default countPoints;
