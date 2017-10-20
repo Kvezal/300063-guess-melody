@@ -13,7 +13,7 @@ suite(`Function of countPoints works correct`, () => {
       {answer: true, time: 2}
     ];
 
-    assert.strictEqual(countPoints(answers, 3), -1);
+    assert.deepStrictEqual(countPoints(answers, 3), {numberOfQuickAnswers: 0, points: 0});
 
     answers = [
       {answer: true, time: 26},
@@ -28,7 +28,7 @@ suite(`Function of countPoints works correct`, () => {
       {answer: true, time: 13}
     ];
 
-    assert.notStrictEqual(countPoints(answers, 3), -1);
+    assert.notDeepStrictEqual(countPoints(answers, 3), {numberOfQuickAnswers: 0, points: 0});
   });
 
   test(`The player made mistakes less than the maximum amount`, () => {
@@ -105,7 +105,7 @@ suite(`Function of countPoints works correct`, () => {
       {answer: true, time: 26}
     ];
 
-    assert.strictEqual(countPoints(answers, 0), -1);
+    assert.deepStrictEqual(countPoints(answers, 0), {numberOfQuickAnswers: 0, points: 0});
   });
 
   test(`The player quickly answered all the questions without mistakes`, () => {

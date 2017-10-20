@@ -24,6 +24,7 @@ const displayScreenResult = (screen) => {
     points: counterPoints.points,
     numberOfQuickAnswers: counterPoints.numberOfQuickAnswers,
     lives: currentState.lives,
+    time: currentState.timer.time,
     timeLeft: currentState.time - currentState.timer.time,
     id: arrayResults.length + 1
   };

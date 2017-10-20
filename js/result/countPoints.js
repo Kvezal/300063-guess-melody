@@ -2,7 +2,7 @@ const countPoints = (answers, lives) => {
   const numberAnswers = 10;
 
   if (answers.length < numberAnswers || lives <= 0) {
-    return -1;
+    return {numberOfQuickAnswers: 0, points: 0};
   }
 
   const fastTime = 30;

@@ -1,7 +1,9 @@
 import {initialState} from '../screens/data';
 
 const calculationOfResults = (arrayResults, currentResult) => {
-  if (currentResult.timeLeft <= 0) {
+  const arrayResultsClone = arrayResults.slice();
+
+  if (currentResult.time <= 0) {
     return `<div class="main-stat">Время вышло!<br>Вы не успели отгадать все мелодии</div>`;
   }
 
@@ -9,15 +11,15 @@ const calculationOfResults = (arrayResults, currentResult) => {
     return `<div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>`;
   }
 
-  arrayResults.push(currentResult);
+  arrayResultsClone.push(currentResult);
 
-  arrayResults.sort((left, right) => left.points - right.points);
+  arrayResultsClone.sort((left, right) => left.points - right.points);
 
-  const numberOfPlayers = arrayResults.length;
+  const numberOfPlayers = arrayResultsClone.length;
 
   let placeOfPlayer;
 
-  arrayResults.forEach((item, index) => {
+  arrayResultsClone.forEach((item, index) => {
     if (item.id === currentResult.id) {
       placeOfPlayer = numberOfPlayers - index;
     }
