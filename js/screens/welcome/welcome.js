@@ -1,8 +1,8 @@
-import getElementFromTemplate from './functions/newDOMElement';
-import {displayScreen} from './functions/screenRender';
-import displayScreenGame from './game';
+/* import getElementFromTemplate from '../functions/newDOMElement';
+import {displayScreen} from '../functions/screenRender';
+import displayScreenGame from '../game';
 
-import {currentState} from './data';
+import {currentState} from '../data';
 
 const markupScreenWelcome = `
   <section class="main main--welcome">
@@ -18,9 +18,8 @@ const markupScreenWelcome = `
 
 const displayScreenWelcome = () => {
   const screenWelcome = getElementFromTemplate(markupScreenWelcome);
-  displayScreen(screenWelcome);
 
-  const buttonPlay = document.querySelector(`.main-play`);
+  const buttonPlay = screenWelcome.querySelector(`.main-play`);
 
   const buttonPlayClickHandler = (evt) => {
     evt.preventDefault();
@@ -31,8 +30,21 @@ const displayScreenWelcome = () => {
   };
 
   buttonPlay.addEventListener(`click`, buttonPlayClickHandler);
+
+  displayScreen(screenWelcome);
 };
 
 displayScreenWelcome();
 
-export default displayScreenWelcome;
+export default displayScreenWelcome;*/
+
+import WelcomeView from './welcome-view';
+import displayScreenGame from '../game';
+import {currentState} from '../data';
+
+const welcome = new WelcomeView();
+welcome.startHandler = () => {
+  displayScreenGame(currentState);
+};
+
+export default () => welcome;

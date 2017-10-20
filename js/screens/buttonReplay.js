@@ -1,4 +1,5 @@
-import displayScreenWelcome from './welcome';
+import {displayScreen} from './functions/screenRender';
+import showWelcome from './welcome/welcome';
 
 const addButtonReplayListener = () => {
   const buttonReplay = document.querySelector(`.main-replay`);
@@ -8,7 +9,7 @@ const addButtonReplayListener = () => {
 
     buttonReplay.removeEventListener(`click`, buttonReplayClickHandler);
 
-    displayScreenWelcome();
+    displayScreen(showWelcome().element);
   };
 
   buttonReplay.addEventListener(`click`, buttonReplayClickHandler);
