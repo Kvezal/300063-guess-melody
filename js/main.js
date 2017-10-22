@@ -1,3 +1,4 @@
-import welcome from './screens/welcome';
+import {displayScreen} from './screens/functions/screenRender';
+import showWelcome from './screens/welcome/welcome';
 
-export default welcome;
+displayScreen(showWelcome().element);

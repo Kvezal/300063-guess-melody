@@ -1,8 +1,8 @@
-import {currentAnswers} from './data';
+import {stateGame} from './data';
 
 const pushCurrentAnswer = (answer, time) => {
   time = (new Date() - time) / 1000;
-  currentAnswers.push({answer, time});
+  stateGame.answers.push({answer, time});
 };
 
 export default pushCurrentAnswer;

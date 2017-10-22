@@ -1,26 +1,21 @@
-import getElementFromTemplate from './functions/newDOMElement';
-import {displayElement} from './functions/screenRender';
 import getTimer from './timer';
-import {currentState} from './data';
-
-import displayScreenResult from './result';
+import {stateGame} from './data';
+import showResult from './result/result';
 
 const displayTimer = () => {
-  currentState.timer = getTimer(currentState.time);
+  stateGame.timer = getTimer(stateGame.time);
 
-  const timerValue = document.querySelector(`.timer-value`);
+  const DOMTimerMinutes = document.querySelector(`.timer-value-mins`);
+  const DOMTimerSeconds = document.querySelector(`.timer-value-secs`);
 
-  currentState.timer.id = window.setInterval(() => {
-    currentState.timer.tick();
+  stateGame.timer.id = window.setInterval(() => {
+    stateGame.timer.tick();
 
-    const timerTemplate =
-      `<span class="timer-value-mins">${currentState.timer.minutes}</span><!--
-        --><span class="timer-value-dots">:</span><!--
-        --><span class="timer-value-secs">${currentState.timer.seconds}</span>`;
+    DOMTimerMinutes.textContent = stateGame.timer.minutes;
+    DOMTimerSeconds.textContent = stateGame.timer.seconds;
 
-    displayElement(getElementFromTemplate(timerTemplate), timerValue);
-    if (currentState.timer.state) {
-      displayScreenResult(`timeIsOver`);
+    if (stateGame.timer.state) {
+      showResult().init();
     }
   }, 1000);
 };

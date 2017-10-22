@@ -1,10 +1,10 @@
 import getElementFromTemplate from './functions/newDOMElement';
 import {displayElement} from './functions/screenRender';
-import displayScreenResult from './result';
+import showResult from './result/result';
 
 const displayAmountMistakes = (amountMistakes) => {
   if (!amountMistakes) {
-    displayScreenResult(`attemptsEnded`);
+    showResult().init();
     return;
   }
 

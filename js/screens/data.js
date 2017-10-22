@@ -1,28 +1,48 @@
 import audioData from './audioData';
-import setCurrentState from './setCurrentState';
 
 const initialState = {
   level: 0,
   lives: 3,
-  time: 300
+  time: 300,
+  answers: []
 };
 
-const currentState = {};
-setCurrentState();
-
-const currentAnswers = [
-  {
-    answer: true,
-    time: 30
-  }
-];
+const stateGame = {};
 
 // Массив arrayResults для тестирования статистики
-const arrayResults = [
-  {points: 20, lives: 3, timeLeft: 200000, id: 1},
-  {points: 10, lives: 1, timeLeft: 100000, id: 4},
-  {points: 15, lives: 2, timeLeft: 100000, id: 2},
-  {points: 12, lives: 3, timeLeft: 30000, id: 3}
+let arrayResults = [
+  {
+    points: 20,
+    numberOfQuickAnswers: 10,
+    lives: 3,
+    time: 200,
+    timeLeft: 100,
+    id: 1
+  },
+  {
+    points: 10,
+    numberOfQuickAnswers: 6,
+    lives: 1,
+    time: 100,
+    timeLeft: 200,
+    id: 4
+  },
+  {
+    points: 15,
+    numberOfQuickAnswers: 8,
+    lives: 2,
+    time: 100,
+    timeLeft: 200,
+    id: 2
+  },
+  {
+    points: 12,
+    numberOfQuickAnswers: 2,
+    lives: 3,
+    time: 30,
+    timeLeft: 270,
+    id: 3
+  }
 ];
 
 const GANRES = {
@@ -142,16 +162,4 @@ const data = [
   }
 ];
 
-const results = {
-  win: {
-    title: `Вы настоящий меломан!`
-  },
-  timeIsOver: {
-    title: `Увы и ах!`
-  },
-  attemptsEnded: {
-    title: `Какая жалость!`
-  }
-};
-
-export {initialState, currentState, data, results, arrayResults, currentAnswers};
+export {initialState, stateGame, data, arrayResults};
