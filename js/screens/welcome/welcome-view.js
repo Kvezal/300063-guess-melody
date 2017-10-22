@@ -3,6 +3,10 @@ import AbstractView from '../../abstract-view';
 const ENTER_KEYCODE = 13;
 
 class WelcomeView extends AbstractView {
+  constructor() {
+    super();
+  }
+
   get template() {
     return (
       `<section class="main main--welcome">

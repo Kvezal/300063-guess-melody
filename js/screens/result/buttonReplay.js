@@ -1,5 +1,5 @@
-import {displayScreen} from './functions/screenRender';
-import showWelcome from './welcome/welcome';
+import {displayScreen} from '../functions/screenRender';
+import showWelcome from '../welcome/welcome';
 
 const addButtonReplayListener = () => {
   const buttonReplay = document.querySelector(`.main-replay`);

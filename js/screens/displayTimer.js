@@ -1,7 +1,6 @@
 import getTimer from './timer';
 import {currentState} from './data';
-
-import displayScreenResult from './result';
+import showResult from './result/result';
 
 const displayTimer = () => {
   currentState.timer = getTimer(currentState.time);
@@ -16,7 +15,7 @@ const displayTimer = () => {
     DOMTimerSeconds.textContent = currentState.timer.seconds;
 
     if (currentState.timer.state) {
-      displayScreenResult(`timeIsOver`);
+      showResult().init();
     }
   }, 1000);
 };
