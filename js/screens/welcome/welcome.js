@@ -1,14 +1,3 @@
-/* import WelcomeView from './welcome-view';
-import displayScreenGame from '../game/game';
-import {currentState} from '../data';
-
-const welcome = new WelcomeView();
-welcome.startHandler = () => {
-  displayScreenGame(currentState);
-};
-
-export default () => welcome;*/
-
 import WelcomeView from './welcome-view';
 import {displayScreen} from '../functions/screenRender';
 import showGame from '../game/game';

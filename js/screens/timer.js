@@ -1,5 +1,3 @@
-// import {currentState} from './data';
-
 const getTimer = (time) => {
   return {
     state: false,
