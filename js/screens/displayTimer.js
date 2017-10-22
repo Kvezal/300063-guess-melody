@@ -1,20 +1,20 @@
 import getTimer from './timer';
-import {currentState} from './data';
+import {stateGame} from './data';
 import showResult from './result/result';
 
 const displayTimer = () => {
-  currentState.timer = getTimer(currentState.time);
+  stateGame.timer = getTimer(stateGame.time);
 
   const DOMTimerMinutes = document.querySelector(`.timer-value-mins`);
   const DOMTimerSeconds = document.querySelector(`.timer-value-secs`);
 
-  currentState.timer.id = window.setInterval(() => {
-    currentState.timer.tick();
+  stateGame.timer.id = window.setInterval(() => {
+    stateGame.timer.tick();
 
-    DOMTimerMinutes.textContent = currentState.timer.minutes;
-    DOMTimerSeconds.textContent = currentState.timer.seconds;
+    DOMTimerMinutes.textContent = stateGame.timer.minutes;
+    DOMTimerSeconds.textContent = stateGame.timer.seconds;
 
-    if (currentState.timer.state) {
+    if (stateGame.timer.state) {
       showResult().init();
     }
   }, 1000);

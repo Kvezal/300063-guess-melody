@@ -3,12 +3,11 @@ import audioData from './audioData';
 const initialState = {
   level: 0,
   lives: 3,
-  time: 300
+  time: 300,
+  answers: []
 };
 
-const currentState = {};
-
-const currentAnswers = [];
+const stateGame = {};
 
 // Массив arrayResults для тестирования статистики
 let arrayResults = [
@@ -163,16 +162,4 @@ const data = [
   }
 ];
 
-const results = {
-  win: {
-    title: `Вы настоящий меломан!`
-  },
-  timeIsOver: {
-    title: `Увы и ах!`
-  },
-  attemptsEnded: {
-    title: `Какая жалость!`
-  }
-};
-
-export {initialState, currentState, data, results, arrayResults, currentAnswers};
+export {initialState, stateGame, data, arrayResults};

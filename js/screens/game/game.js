@@ -1,14 +1,14 @@
 import GameView from './game-view';
-import {currentState, currentAnswers} from '../data';
+import {stateGame} from '../data';
 import displayAmountMistakes from '../displayAmountMistakes';
 import displayTimer from '../displayTimer';
 import showLevel from './level';
 
 const game = new GameView();
 game.init = () => {
-  currentAnswers.splice(0, 10);
+  stateGame.answers.splice(0, 10);
   displayTimer();
-  displayAmountMistakes(currentState.lives);
+  displayAmountMistakes(stateGame.lives);
 
   showLevel().init();
 };

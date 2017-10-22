@@ -1,5 +1,5 @@
 import LevelView from './level-view';
-import {currentState, data, currentAnswers} from '../data';
+import {stateGame, data} from '../data';
 import {displayElement} from '../functions/screenRender';
 import displayAmountMistakes from '../displayAmountMistakes';
 import pushCurrentAnswer from '../pushCurrentAnswer';
@@ -22,7 +22,7 @@ const getCheckedFormElement = (list, actualLevel) => {
 
 level.init = () => {
   const mainWrap = document.querySelector(`.main-wrap`);
-  const actualLevel = data[currentState.level];
+  const actualLevel = data[stateGame.level];
   const currentLevel = level(actualLevel);
   const time = new Date();
   let answer = null;
@@ -41,7 +41,7 @@ level.init = () => {
         const form = evt.currentTarget;
         const answersList = form.querySelectorAll(`input[name="answer"]`);
 
-        const checkedFormElement = getCheckedFormElement(answersList, currentState.level);
+        const checkedFormElement = getCheckedFormElement(answersList, stateGame.level);
         if (checkedFormElement.length) {
 
           answer = checkedFormElement.every((it) => it);
@@ -52,18 +52,18 @@ level.init = () => {
     }
 
     if (answer !== null) {
-      currentState.level = actualLevel.nextLevel;
+      stateGame.level = actualLevel.nextLevel;
 
-      displayElement(level(data[currentState.level]).element, mainWrap);
+      displayElement(level(data[stateGame.level]).element, mainWrap);
       level.init();
 
       pushCurrentAnswer(answer, time);
 
       if (!answer) {
-        displayAmountMistakes(--currentState.lives);
+        displayAmountMistakes(--stateGame.lives);
       }
 
-      if (currentAnswers.length >= 10) {
+      if (stateGame.answers.length >= 10) {
         showResult().init();
       }
     }
