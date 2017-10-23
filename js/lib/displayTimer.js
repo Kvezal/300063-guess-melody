@@ -1,5 +1,6 @@
 import getTimer from './timer';
 import {stateGame} from '../data/data';
+import {displayScreen} from './screenRender';
 import showResult from '../screens/result/result';
 // import getRadius from './get-radius';
 
@@ -25,7 +26,7 @@ const displayTimer = () => {
     // timerLine.style.strokeDashoffset = ratioOfCircumferences.offset;
 
     if (stateGame.timer.state) {
-      showResult().init();
+      displayScreen(showResult().element);
     }
   }, 1000);
 };

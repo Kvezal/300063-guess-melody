@@ -5,6 +5,7 @@ import displayAmountMistakes from '../../lib/displayAmountMistakes';
 import getCheckedFormElement from '../../lib/get-checked-form-element';
 import changeLevelScreen from '../../lib/change-level-screen';
 import showResult from '../result/result';
+import {displayScreen} from '../../lib/screenRender';
 
 const genreLevel = new GenreLevelView();
 genreLevel.answerHandler = (evt) => {
@@ -31,7 +32,7 @@ genreLevel.answerHandler = (evt) => {
     }
 
     if (stateGame.answers.length >= 10) {
-      showResult().init();
+      displayScreen(showResult().element);
       return;
     }
 

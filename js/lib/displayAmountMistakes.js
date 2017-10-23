@@ -1,10 +1,10 @@
 import getElementFromTemplate from './newDOMElement';
-import {displayElement} from './screenRender';
+import {displayScreen, displayElement} from './screenRender';
 import showResult from '../screens/result/result';
 
 const displayAmountMistakes = (amountMistakes) => {
   if (!amountMistakes) {
-    showResult().init();
+    displayScreen(showResult().element);
     return;
   }
 

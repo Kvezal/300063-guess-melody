@@ -4,6 +4,7 @@ import pushCurrentAnswer from '../../lib/pushCurrentAnswer';
 import displayAmountMistakes from '../../lib/displayAmountMistakes';
 import changeLevelScreen from '../../lib/change-level-screen';
 import showResult from '../result/result';
+import {displayScreen} from '../../lib/screenRender';
 
 const artistLevel = new ArtistLevelView();
 artistLevel.answerHandler = (evt) => {
@@ -25,8 +26,7 @@ artistLevel.answerHandler = (evt) => {
   }
 
   if (stateGame.answers.length >= 10) {
-    showResult().init();
-    return;
+    displayScreen(showResult().element);
   }
 
 };
