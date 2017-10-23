@@ -1,4 +1,4 @@
-import newDOMElement from './screens/functions/newDOMElement';
+import newDOMElement from '../lib/newDOMElement';
 
 class AbstractView {
   get template() {

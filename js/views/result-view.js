@@ -1,6 +1,6 @@
-import AbstractView from '../../abstract-view';
-import calculationOfResults from './calculationOfResults';
-import {arrayResults} from '../data';
+import AbstractView from './abstract-view';
+import calculationOfResults from '../lib/calculationOfResults';
+import {arrayResults} from '../data/data';
 
 const screens = {
   win: {

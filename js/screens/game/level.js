@@ -1,8 +1,8 @@
-import LevelView from './level-view';
-import {stateGame, data} from '../data';
-import {displayElement} from '../functions/screenRender';
-import displayAmountMistakes from '../displayAmountMistakes';
-import pushCurrentAnswer from '../pushCurrentAnswer';
+import LevelView from '../../views/level-view';
+import {stateGame, data} from '../../data/data';
+import {displayElement} from '../../lib/screenRender';
+import displayAmountMistakes from '../../lib/displayAmountMistakes';
+import pushCurrentAnswer from '../../lib/pushCurrentAnswer';
 import showResult from '../result/result';
 
 const level = (currentLevel) => new LevelView(currentLevel);

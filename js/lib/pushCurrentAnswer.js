@@ -1,4 +1,4 @@
-import {stateGame} from './data';
+import {stateGame} from '../data/data';
 
 const pushCurrentAnswer = (answer, time) => {
   time = (new Date() - time) / 1000;

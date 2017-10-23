@@ -1,6 +1,6 @@
-import getElementFromTemplate from './functions/newDOMElement';
-import {displayElement} from './functions/screenRender';
-import showResult from './result/result';
+import getElementFromTemplate from './newDOMElement';
+import {displayElement} from './screenRender';
+import showResult from '../screens/result/result';
 
 const displayAmountMistakes = (amountMistakes) => {
   if (!amountMistakes) {

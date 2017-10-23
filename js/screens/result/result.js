@@ -1,8 +1,8 @@
-import ResultView from './result-view';
-import {displayScreen} from '../functions/screenRender';
+import ResultView from '../../views/result-view';
+import {displayScreen} from '../../lib/screenRender';
 import showWelcome from '../welcome/welcome';
-import {stateGame, arrayResults} from '../data';
-import countPoints from './countPoints';
+import {stateGame, arrayResults} from '../../data/data';
+import countPoints from '../../lib/countPoints';
 
 const result = (currentResult) => new ResultView(currentResult);
 

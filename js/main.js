@@ -1,4 +1,4 @@
-import {displayScreen} from './screens/functions/screenRender';
+import {displayScreen} from './lib/screenRender';
 import showWelcome from './screens/welcome/welcome';
 
 displayScreen(showWelcome().element);

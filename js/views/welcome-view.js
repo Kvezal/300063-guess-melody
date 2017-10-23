@@ -1,4 +1,4 @@
-import AbstractView from '../../abstract-view';
+import AbstractView from './abstract-view';
 
 const ENTER_KEYCODE = 13;
 

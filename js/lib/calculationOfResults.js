@@ -1,4 +1,4 @@
-import {initialState} from '../data';
+import {initialState} from '../data/data';
 
 const calculationOfResults = (arrayResults, currentResult) => {
   const arrayResultsClone = arrayResults.slice();
