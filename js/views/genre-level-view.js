@@ -1,13 +1,15 @@
 import AbstractView from './abstract-view';
-import {data, stateGame} from '../data/data';
+import {data} from '../data/data';
 
 class GenreLevelView extends AbstractView {
-  constructor() {
+  constructor(state) {
     super();
+
+    this.state = state;
   }
 
   get template() {
-    const currentLevel = data[stateGame.level];
+    const currentLevel = data[this.state.level];
 
     return (
       `<h2 class="title">${currentLevel.question}</h2>

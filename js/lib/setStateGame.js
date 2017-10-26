@@ -1,11 +1,15 @@
-import {initialState, stateGame} from '../data/data';
+// import {initialState, stateGame} from '../data/data';
 
-const setStateGame = () => {
-  for (const key in initialState) {
-    if (initialState.hasOwnProperty(key)) {
-      stateGame[key] = initialState[key];
+const setStateGame = (state) => {
+  const newState = {
+    answers: []
+  };
+  for (const key in state) {
+    if (state.hasOwnProperty(key)) {
+      newState[key] = state[key];
     }
   }
+  return newState;
 };
 
 export default setStateGame;

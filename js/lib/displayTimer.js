@@ -1,18 +1,17 @@
 import getTimer from './timer';
-import {stateGame} from '../data/data';
-import {displayScreen} from './screenRender';
-import showResult from '../screens/result/result';
+import {} from '../data/data';
+import App from '../application';
 // import getRadius from './get-radius';
 
-const displayTimer = () => {
-  stateGame.timer = getTimer(stateGame.time);
+const displayTimer = (state) => {
+  state.timer = getTimer(state.time);
 
   const DOMTimerMinutes = document.querySelector(`.timer-value-mins`);
   const DOMTimerSeconds = document.querySelector(`.timer-value-secs`);
   // const timerLine = document.querySelector(`.timer-line`);
 
-  stateGame.timer.id = window.setInterval(() => {
-    stateGame.timer.tick();
+  state.timer.id = window.setInterval(() => {
+    state.timer.tick();
 
     // const ratioOfTimes = stateGame.timer.time / stateGame.time;
 
@@ -20,13 +19,13 @@ const displayTimer = () => {
 
     // console.log(stateGame.time, stateGame.timer.time, timerLine.r.baseVal.value)
 
-    DOMTimerMinutes.textContent = stateGame.timer.minutes;
-    DOMTimerSeconds.textContent = stateGame.timer.seconds;
+    DOMTimerMinutes.textContent = state.timer.minutes;
+    DOMTimerSeconds.textContent = state.timer.seconds;
     // timerLine.style.strokeDasharray = ratioOfCircumferences.stroke;
     // timerLine.style.strokeDashoffset = ratioOfCircumferences.offset;
 
-    if (stateGame.timer.state) {
-      displayScreen(showResult().element);
+    if (state.timer.time <= 0) {
+      App.showResult(state);
     }
   }, 1000);
 };

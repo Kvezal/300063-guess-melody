@@ -1,4 +1,3 @@
-import {displayScreen} from './lib/screenRender';
-import showWelcome from './screens/welcome/welcome';
+import App from './application';
 
-displayScreen(showWelcome().element);
+App.showWelcome();

@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view';
 import calculationOfResults from '../lib/calculationOfResults';
-import {stateGame, arrayResults} from '../data/data';
+import {arrayResults} from '../data/data';
 import countPoints from '../lib/countPoints';
 
 const screens = {
@@ -16,8 +16,10 @@ const screens = {
 };
 
 class ResultView extends AbstractView {
-  constructor() {
+  constructor(state) {
     super();
+
+    this.state = state;
   }
 
   get template() {
@@ -45,22 +47,15 @@ class ResultView extends AbstractView {
   }
 
   get currentResult() {
-    const counterPoints = countPoints(stateGame.answers, stateGame.lives);
+    const counterPoints = countPoints(this.state.answers, this.state.lives);
     return {
       points: counterPoints.points,
       numberOfQuickAnswers: counterPoints.numberOfQuickAnswers,
-      lives: stateGame.lives,
-      time: stateGame.timer.time,
-      timeLeft: stateGame.time - stateGame.timer.time,
+      lives: this.state.lives,
+      time: this.state.timer.time,
+      timeLeft: this.state.time - this.state.timer.time,
       id: arrayResults.length + 1
     };
-  }
-
-  get element() {
-    this.init();
-    const currentElement = this.render();
-    this.bind(currentElement);
-    return currentElement;
   }
 
   bind(element) {

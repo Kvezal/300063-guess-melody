@@ -1,17 +1,16 @@
 import getElementFromTemplate from './newDOMElement';
-import {displayScreen, displayElement} from './screenRender';
-import showResult from '../screens/result/result';
+import {displayElement} from './screenRender';
+import App from '../application';
 
-const displayAmountMistakes = (amountMistakes) => {
+const displayAmountMistakes = (state, amountMistakes) => {
   if (!amountMistakes) {
-    displayScreen(showResult().element);
+    App.showResult(state);
     return;
   }
 
   const mainMistakes = document.querySelector(`.main-mistakes`);
 
   let amountMistakesTemplate = ``;
-
   for (let i = 0; i < amountMistakes; i++) {
     amountMistakesTemplate += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49"> `;
   }
