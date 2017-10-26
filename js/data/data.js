@@ -3,7 +3,7 @@ import audioData from './audioData';
 const initialState = {
   level: 0,
   lives: 3,
-  time: 11
+  time: 300
 };
 
 const stateGame = {};
