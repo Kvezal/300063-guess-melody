@@ -14,7 +14,7 @@ class GameScreen {
     // state.answers.splice(0, 10);
 
     displayScreen(this.view.element);
-    displayTimer(this.view.state);
+    this.view.state = displayTimer(this.view.state);
     displayAmountMistakes(this.view.state, this.view.state.lives);
 
     App.changeLevel(this.view.state);

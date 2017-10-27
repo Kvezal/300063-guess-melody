@@ -1,6 +1,5 @@
 import ArtistLevelView from '../views/artist-level-view';
 import App from '../application';
-import showResult from './result';
 
 import {data} from '../data/data';
 import pushCurrentAnswer from '../lib/pushCurrentAnswer';
@@ -14,12 +13,12 @@ class ArtistLevelScreen {
   init(state) {
     this.view = new ArtistLevelView(state);
     const mainWrap = document.querySelector(`.main-wrap`);
+    const time = new Date();
 
     this.view.answerHandler = (evt) => {
       evt.preventDefault();
 
       const currentLevel = data[this.view.state.level];
-      const time = new Date();
 
       const answerIndex = evt.currentTarget.htmlFor.slice(7);
       const answer = currentLevel.answers[answerIndex].isCorrect;
@@ -34,7 +33,7 @@ class ArtistLevelScreen {
       }
 
       if (this.view.state.answers.length >= 10) {
-        showResult.init(this.view.state);
+        App.showResult(this.view.state);
       }
     };
 

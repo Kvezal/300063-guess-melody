@@ -1,5 +1,5 @@
 import WelcomeView from '../views/welcome-view';
-import showGame from './game';
+import App from '../application';
 import {displayScreen} from '../lib/screenRender';
 
 class WelcomeScreen {
@@ -9,7 +9,7 @@ class WelcomeScreen {
 
   init() {
     this.view.startHandler = () => {
-      showGame.init();
+      App.showGame();
     };
 
     displayScreen(this.view.element);

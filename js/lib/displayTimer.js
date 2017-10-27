@@ -28,6 +28,7 @@ const displayTimer = (state) => {
       App.showResult(state);
     }
   }, 1000);
+  return state;
 };
 
 export default displayTimer;

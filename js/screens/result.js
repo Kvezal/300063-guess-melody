@@ -1,5 +1,5 @@
 import ResultView from '../views/result-view';
-import showWelcome from './welcome';
+import App from '../application';
 import {displayScreen} from '../lib/screenRender';
 
 class ResultScreen {
@@ -10,7 +10,7 @@ class ResultScreen {
     this.view = new ResultView(state);
     window.clearInterval(this.view.state.timer.id);
     this.view.replayHandler = () => {
-      showWelcome.init();
+      App.showWelcome();
     };
     displayScreen(this.view.element);
   }

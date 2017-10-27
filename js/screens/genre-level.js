@@ -1,6 +1,5 @@
 import GenreLevelView from '../views/genre-level-view';
 import App from '../application';
-import showResult from './result';
 
 import {data} from '../data/data';
 import pushCurrentAnswer from '../lib/pushCurrentAnswer';
@@ -14,12 +13,12 @@ class GenreLevelScreen {
   init(state) {
     this.view = new GenreLevelView(state);
     const mainWrap = document.querySelector(`.main-wrap`);
+    const time = new Date();
 
     this.view.answerHandler = (evt) => {
       evt.preventDefault();
 
       const currentLevel = data[this.view.state.level];
-      const time = new Date();
       const form = evt.currentTarget;
       const answersList = form.querySelectorAll(`input[name="answer"]`);
 
@@ -39,7 +38,7 @@ class GenreLevelScreen {
         }
 
         if (this.view.state.answers.length >= 10) {
-          showResult.init(this.view.state);
+          App.showResult(this.view.state);
           return;
         }
       }
