@@ -30,12 +30,12 @@ class GenreLevelScreen {
 
         this.view.state.level = currentLevel.nextLevel;
 
-        pushCurrentAnswer(this.view.state, answer, time);
-        App.changeLevel(this.view.state);
-
         if (!answer) {
           displayAmountMistakes(this.view.state, --this.view.state.lives);
         }
+
+        pushCurrentAnswer(this.view.state, answer, time);
+        App.showGame(this.view.state);
 
         if (this.view.state.answers.length >= 10) {
           App.showResult(this.view.state);
