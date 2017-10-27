@@ -6,8 +6,6 @@ const initialState = {
   time: 300
 };
 
-const stateGame = {};
-
 // Массив arrayResults для тестирования статистики
 let arrayResults = [
   {
@@ -161,4 +159,4 @@ const data = [
   }
 ];
 
-export {initialState, stateGame, data, arrayResults};
+export {initialState, data, arrayResults};
