@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view';
 import calculationOfResults from '../lib/calculationOfResults';
-import {arrayResults} from '../data/data';
+import {initialState, arrayResults} from '../data/data';
 import countPoints from '../lib/countPoints';
 
 const screens = {
@@ -52,8 +52,8 @@ class ResultView extends AbstractView {
       points: counterPoints.points,
       numberOfQuickAnswers: counterPoints.numberOfQuickAnswers,
       lives: this.state.lives,
-      time: this.state.timer.time,
-      timeLeft: this.state.time - this.state.timer.time,
+      time: this.state.time,
+      timeLeft: initialState.time - this.state.time,
       id: arrayResults.length + 1
     };
   }
