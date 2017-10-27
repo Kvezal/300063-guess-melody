@@ -3,11 +3,8 @@ import audioData from './audioData';
 const initialState = {
   level: 0,
   lives: 3,
-  time: 300,
-  answers: []
+  time: 300
 };
-
-const stateGame = {};
 
 // Массив arrayResults для тестирования статистики
 let arrayResults = [
@@ -162,4 +159,4 @@ const data = [
   }
 ];
 
-export {initialState, stateGame, data, arrayResults};
+export {initialState, data, arrayResults};
