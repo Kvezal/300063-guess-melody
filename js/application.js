@@ -8,6 +8,8 @@ import {data, initialState} from './data/data';
 const ControllerId = {
   WELCOME: ``,
   GAME: `game`,
+  ARTIST: `artist`,
+  GENRE: `genre`,
   RESULT: `result`
 };
 
@@ -26,6 +28,8 @@ const loadState = (dataString) => {
 const routes = {
   [ControllerId.WELCOME]: welcomeScreen,
   [ControllerId.GAME]: gameScreen,
+  [ControllerId.ARTIST]: showArtistLevel,
+  [ControllerId.GENRE]: showGenreLevel,
   [ControllerId.RESULT]: resultScreen
 };
 
@@ -60,14 +64,9 @@ class Application {
   }
 
   static changeLevel(state) {
-    const currentLevel = data[state.level];
-
-    if (currentLevel.type === `artist`) {
-      showArtistLevel.init(state);
-    }
-
-    if (currentLevel.type === `genre`) {
-      showGenreLevel.init(state);
+    const controller = routes[data[state.level].type];
+    if (controller) {
+      controller.init(state);
     }
   }
 }
