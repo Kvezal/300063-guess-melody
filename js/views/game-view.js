@@ -8,7 +8,7 @@ class GameView extends AbstractView {
 
   get template() {
     return (
-      `<section class="main main--level main--level-artist">
+      `<section class="main main--level">
         <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
           <circle
             cx="390" cy="390" r="370"
