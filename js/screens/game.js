@@ -1,17 +1,12 @@
 import App from '../application';
 import GameView from '../views/game-view';
-
-import setStateGame from '../lib/setStateGame';
 import {initialState} from '../data/data';
-import displayAmountMistakes from '../lib/displayAmountMistakes';
-import {displayScreen} from '../lib/screenRender';
+import {displayAmountMistakes, displayScreen} from '../lib/utils';
 
 class GameScreen {
   init(state = initialState) {
-
-    state = setStateGame(state);
+    state = this.setStateGame(state);
     this.view = new GameView(state);
-    // state.answers.splice(0, 10);
 
     displayScreen(this.view.element);
     this.tick();
@@ -37,13 +32,17 @@ class GameScreen {
   tick() {
     window.clearInterval(this.view.state.timerId);
 
-    const DOMTimerMinutes = document.querySelector(`.timer-value-mins`);
-    const DOMTimerSeconds = document.querySelector(`.timer-value-secs`);
+    const DOMTimerValue = document.querySelector(`.timer-value`);
+    const DOMTimerMinutes = DOMTimerValue.querySelector(`.timer-value-mins`);
+    const DOMTimerSeconds = DOMTimerValue.querySelector(`.timer-value-secs`);
     this.displayTimer(this.view.state.time, DOMTimerMinutes, DOMTimerSeconds);
     // const timerLine = document.querySelector(`.timer-line`);
 
     this.view.state.timerId = window.setInterval(() => {
       this.view.state.time -= 0.125;
+      if (this.view.state.time <= 30 && !DOMTimerValue.classList.contains(`timer-value--finished`)) {
+        DOMTimerValue.classList.add(`timer-value--finished`);
+      }
 
       this.displayTimer(this.view.state.time, DOMTimerMinutes, DOMTimerSeconds);
 
@@ -59,6 +58,18 @@ class GameScreen {
         App.showResult(this.view.state);
       }
     }, 125);
+  }
+
+  setStateGame(state) {
+    const newState = {
+      answers: []
+    };
+    for (const key in state) {
+      if (state.hasOwnProperty(key)) {
+        newState[key] = state[key];
+      }
+    }
+    return newState;
   }
 }
 

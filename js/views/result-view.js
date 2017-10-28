@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
+import countPoints from '../lib/countPoints';
 import calculationOfResults from '../lib/calculationOfResults';
 import {initialState, arrayResults} from '../data/data';
-import countPoints from '../lib/countPoints';
 
 const screens = {
   win: {
@@ -40,7 +40,7 @@ class ResultView extends AbstractView {
     if (this.currentResult.time <= 0) {
       return `timeIsOver`;
     }
-    if (this.currentResult.lives <= 0) {
+    if (this.currentResult.lives < 0) {
       return `attemptsEnded`;
     }
     return `win`;

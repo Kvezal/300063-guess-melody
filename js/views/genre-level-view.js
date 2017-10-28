@@ -27,7 +27,7 @@ class GenreLevelView extends AbstractView {
           <div class="player-wrapper">
             <div class="player">
               <audio src="${item.src}"></audio>
-              <button class="player-control player-control--pause"></button>
+              <button class="player-control player-control--play"></button>
               <div class="player-track">
                 <span class="player-status"></span>
               </div>
@@ -43,9 +43,18 @@ class GenreLevelView extends AbstractView {
   bind(element) {
     const answerForm = element.querySelector(`.genre`);
     answerForm.addEventListener(`submit`, this.answerHandler);
+
+    const listOfPlayerControls = element.querySelectorAll(`.player-control`);
+    Array.prototype.forEach.call(listOfPlayerControls, (item) => {
+      item.addEventListener(`click`, this.playerControlClickHandler);
+    });
   }
 
   answerHandler() {
+
+  }
+
+  playerControlClickHandler() {
 
   }
 }

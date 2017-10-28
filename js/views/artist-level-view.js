@@ -15,7 +15,7 @@ class ArtistLevelView extends AbstractView {
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${currentLevel.question}" autoplay></audio>
+          <audio src="${currentLevel.question}"></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>
@@ -44,15 +44,20 @@ class ArtistLevelView extends AbstractView {
   }
 
   bind(element) {
+    const playerControl = element.querySelector(`.player-control`);
+    playerControl.onclick = (evt) => this.playerControlClickHandler(evt);
+
     const radioBtns = element.querySelectorAll(`.main-answer`);
     Array.prototype.forEach.call(radioBtns, (it) => {
-      it.onclick = (evt) => {
-        this.answerHandler(evt);
-      };
+      it.onclick = (evt) => this.answerHandler(evt);
     });
   }
 
   answerHandler() {
+
+  }
+
+  playerControlClickHandler() {
 
   }
 }

@@ -1,10 +1,7 @@
 import ArtistLevelView from '../views/artist-level-view';
 import App from '../application';
-
 import {data} from '../data/data';
-import pushCurrentAnswer from '../lib/pushCurrentAnswer';
-import displayAmountMistakes from '../lib/displayAmountMistakes';
-import {displayElement} from '../lib/screenRender';
+import {displayAmountMistakes, pushCurrentAnswer, displayElement, playSong, stopSong} from '../lib/utils';
 
 class ArtistLevelScreen {
   constructor() {
@@ -14,6 +11,19 @@ class ArtistLevelScreen {
     this.view = new ArtistLevelView(state);
     const mainWrap = document.querySelector(`.main-wrap`);
     const time = new Date();
+
+    this.view.playerControlClickHandler = (evt) => {
+      evt.preventDefault();
+      console.log(evt.currentTarget)
+
+      if (evt.currentTarget.classList.contains(`player-control--play`)) {
+        console.log(1);
+        playSong(evt.currentTarget);
+      } else {
+        console.log(2)
+        stopSong(evt.currentTarget);
+      }
+    };
 
     this.view.answerHandler = (evt) => {
       evt.preventDefault();
@@ -38,6 +48,8 @@ class ArtistLevelScreen {
     };
 
     displayElement(this.view.element, mainWrap);
+
+    document.querySelector(`audio`).play();
   }
 }
 
