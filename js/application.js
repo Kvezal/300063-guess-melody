@@ -72,6 +72,4 @@ class Application {
   }
 }
 
-Application.init();
-
 export default Application;
