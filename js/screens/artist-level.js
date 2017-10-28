@@ -14,13 +14,10 @@ class ArtistLevelScreen {
 
     this.view.playerControlClickHandler = (evt) => {
       evt.preventDefault();
-      console.log(evt.currentTarget)
 
       if (evt.currentTarget.classList.contains(`player-control--play`)) {
-        console.log(1);
         playSong(evt.currentTarget);
       } else {
-        console.log(2)
         stopSong(evt.currentTarget);
       }
     };
@@ -29,7 +26,6 @@ class ArtistLevelScreen {
       evt.preventDefault();
 
       const currentLevel = data[this.view.state.level];
-
       const answerIndex = evt.currentTarget.htmlFor.slice(7);
       const answer = currentLevel.answers[answerIndex].isCorrect;
 

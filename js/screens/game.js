@@ -1,10 +1,9 @@
 import App from '../application';
 import GameView from '../views/game-view';
-import {initialState} from '../data/data';
 import {displayAmountMistakes, displayScreen} from '../lib/utils';
 
 class GameScreen {
-  init(state = initialState) {
+  init(state) {
     state = this.setStateGame(state);
     this.view = new GameView(state);
 
