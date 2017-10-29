@@ -1,12 +1,9 @@
 import GenreLevelView from '../views/genre-level-view';
 import App from '../application';
 import {data} from '../data/data';
-import {displayAmountMistakes, pushCurrentAnswer, displayElement, playSong, stopSong} from '../lib/utils';
+import {pushCurrentAnswer, displayElement, playSong, stopSong} from '../lib/utils';
 
 class GenreLevelScreen {
-  constructor() {
-  }
-
   init(state) {
     this.view = new GenreLevelView(state);
     const mainWrap = document.querySelector(`.main-wrap`);
@@ -46,7 +43,12 @@ class GenreLevelScreen {
         this.view.state.level = currentLevel.nextLevel;
 
         if (!answer) {
-          displayAmountMistakes(this.view.state, --this.view.state.lives);
+          --this.view.state.lives;
+        }
+
+        if (this.view.state.lives < 0) {
+          App.showResult(state);
+          return;
         }
 
         pushCurrentAnswer(this.view.state, answer, time);

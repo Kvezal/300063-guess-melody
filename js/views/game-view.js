@@ -1,4 +1,5 @@
 import AbstractView from './abstract-view';
+import {initialState} from '../data/data';
 
 class GameView extends AbstractView {
   constructor(state) {
@@ -21,10 +22,19 @@ class GameView extends AbstractView {
             --><span class="timer-value-secs">00</span>
           </div>
         </svg>
-        <div class="main-mistakes"></div>
+        <div class="main-mistakes">${this.getAmountMistakes(this.state, this.state.leves)}</div>
         <div class="main-wrap"></div>
       </section>`
     );
+  }
+
+  getAmountMistakes(state, amountLives) {
+    const amountMistakes = initialState.lives - amountLives;
+    let amountMistakesTemplate = ``;
+    for (let i = 0; i < amountMistakes; i++) {
+      amountMistakesTemplate += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49"> `;
+    }
+    return amountMistakesTemplate;
   }
 
   init() {
