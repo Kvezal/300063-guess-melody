@@ -1,5 +1,4 @@
 import AbstractView from './abstract-view';
-import {data} from '../data/data';
 
 class ArtistLevelView extends AbstractView {
   constructor(model) {
@@ -9,7 +8,7 @@ class ArtistLevelView extends AbstractView {
   }
 
   get template() {
-    const currentLevel = data[this.model.state.level];
+    const currentLevel = this.model.getCurrentLevel();
 
     return (
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
