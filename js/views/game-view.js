@@ -2,9 +2,10 @@ import AbstractView from './abstract-view';
 import {initialState} from '../data/data';
 
 class GameView extends AbstractView {
-  constructor(state) {
+  constructor(model) {
     super();
-    this.state = state;
+
+    this.model = model;
   }
 
   get template() {
@@ -22,7 +23,7 @@ class GameView extends AbstractView {
             --><span class="timer-value-secs">00</span>
           </div>
         </svg>
-        <div class="main-mistakes">${this.getAmountMistakes(this.state, this.state.leves)}</div>
+        <div class="main-mistakes">${this.getAmountMistakes(this.model.state, this.model.state.lives)}</div>
         <div class="main-wrap"></div>
       </section>`
     );

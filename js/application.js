@@ -1,5 +1,5 @@
 import welcomeScreen from './screens/welcome';
-import gameScreen from './screens/game';
+import GameScreen from './screens/game';
 import resultScreen from './screens/result';
 import showArtistLevel from './screens/artist-level';
 import showGenreLevel from './screens/genre-level';
@@ -27,7 +27,7 @@ const loadState = (dataString) => {
 
 const routes = {
   [ControllerId.WELCOME]: welcomeScreen,
-  [ControllerId.GAME]: gameScreen,
+  [ControllerId.GAME]: new GameScreen(data),
   [ControllerId.ARTIST]: showArtistLevel,
   [ControllerId.GENRE]: showGenreLevel,
   [ControllerId.RESULT]: resultScreen
@@ -63,10 +63,10 @@ class Application {
     location.hash = `${ControllerId.RESULT}?${saveState(state)}`;
   }
 
-  static changeLevel(state) {
-    const controller = routes[data[state.level].type];
+  static changeLevel(model) {
+    const controller = routes[data[model.state.level].type];
     if (controller) {
-      controller.init(state);
+      controller.init(model);
     }
   }
 }

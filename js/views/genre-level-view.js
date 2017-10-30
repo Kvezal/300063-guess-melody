@@ -2,14 +2,14 @@ import AbstractView from './abstract-view';
 import {data} from '../data/data';
 
 class GenreLevelView extends AbstractView {
-  constructor(state) {
+  constructor(model) {
     super();
 
-    this.state = state;
+    this.model = model;
   }
 
   get template() {
-    const currentLevel = data[this.state.level];
+    const currentLevel = data[this.model.state.level];
 
     return (
       `<h2 class="title">${currentLevel.question}</h2>
