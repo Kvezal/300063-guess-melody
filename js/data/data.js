@@ -3,7 +3,8 @@ import audioData from './audioData';
 const initialState = {
   level: 0,
   lives: 3,
-  time: 300
+  time: 300,
+  answers: []
 };
 
 // Массив arrayResults для тестирования статистики

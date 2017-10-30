@@ -1,4 +1,4 @@
-import newDOMElement from '../lib/newDOMElement';
+import {getElementFromTemplate} from '../lib/utils';
 
 class AbstractView {
   get template() {
@@ -19,7 +19,7 @@ class AbstractView {
   }
 
   render() {
-    return newDOMElement(this.template);
+    return getElementFromTemplate(this.template);
   }
 }
 

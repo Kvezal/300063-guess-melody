@@ -1,15 +1,14 @@
 import AbstractView from './abstract-view';
-import {data} from '../data/data';
 
 class ArtistLevelView extends AbstractView {
-  constructor(state) {
+  constructor(model) {
     super();
 
-    this.state = state;
+    this.model = model;
   }
 
   get template() {
-    const currentLevel = data[this.state.level];
+    const currentLevel = this.model.getCurrentLevel();
 
     return (
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
@@ -44,15 +43,20 @@ class ArtistLevelView extends AbstractView {
   }
 
   bind(element) {
+    const playerControl = element.querySelector(`.player-control`);
+    playerControl.onclick = (evt) => this.playerControlClickHandler(evt);
+
     const radioBtns = element.querySelectorAll(`.main-answer`);
     Array.prototype.forEach.call(radioBtns, (it) => {
-      it.onclick = (evt) => {
-        this.answerHandler(evt);
-      };
+      it.onclick = (evt) => this.answerHandler(evt);
     });
   }
 
   answerHandler() {
+
+  }
+
+  playerControlClickHandler() {
 
   }
 }

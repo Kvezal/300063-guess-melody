@@ -1,44 +1,57 @@
 import GenreLevelView from '../views/genre-level-view';
 import App from '../application';
-
-import {data} from '../data/data';
-import pushCurrentAnswer from '../lib/pushCurrentAnswer';
-import displayAmountMistakes from '../lib/displayAmountMistakes';
-import {displayElement} from '../lib/screenRender';
+import {displayElement, playSong, stopSong} from '../lib/utils';
 
 class GenreLevelScreen {
-  constructor() {
-  }
+  init(model) {
+    this.view = new GenreLevelView(model);
+    const stateGame = this.view.model.state;
 
-  init(state) {
-    this.view = new GenreLevelView(state);
     const mainWrap = document.querySelector(`.main-wrap`);
     const time = new Date();
+
+    this.view.playerControlClickHandler = (evt) => {
+      evt.preventDefault();
+
+      const lastPlayerControlPlay = document.querySelector(`.player-control--pause`);
+      if (!lastPlayerControlPlay) {
+        playSong(evt.currentTarget);
+        return;
+      }
+      if (lastPlayerControlPlay === evt.currentTarget) {
+        stopSong(evt.currentTarget);
+        return;
+      }
+      if (lastPlayerControlPlay !== evt.currentTarget) {
+        stopSong(lastPlayerControlPlay);
+        playSong(evt.currentTarget);
+      }
+    };
 
     this.view.answerHandler = (evt) => {
       evt.preventDefault();
 
-      const currentLevel = data[this.view.state.level];
+      const currentLevel = model.getCurrentLevel();
       const form = evt.currentTarget;
       const answersList = form.querySelectorAll(`input[name="answer"]`);
 
-      const checkedFormElement = this.getCheckedFormElement(answersList, this.view.state.level);
+      const checkedFormElement = this.getCheckedFormElement(answersList);
 
       if (checkedFormElement.length) {
         const answer = checkedFormElement.every((it) => it);
         form.removeEventListener(`submit`, this.view.answerHandler);
 
-        this.view.state.level = currentLevel.nextLevel;
-
-        pushCurrentAnswer(this.view.state, answer, time);
-        App.changeLevel(this.view.state);
+        stateGame.level = currentLevel.nextLevel;
 
         if (!answer) {
-          displayAmountMistakes(this.view.state, --this.view.state.lives);
+          model.die();
         }
 
-        if (this.view.state.answers.length >= 10) {
-          App.showResult(this.view.state);
+        model.addAnswer(answer, time);
+        App.showGame(stateGame);
+
+        if (!model.isCanPlay()) {
+          App.showResult(stateGame);
           return;
         }
       }
@@ -47,12 +60,13 @@ class GenreLevelScreen {
     displayElement(this.view.element, mainWrap);
   }
 
-  getCheckedFormElement(list, actualLevel) {
+  getCheckedFormElement(list) {
     const result = [];
+    const currentLevel = this.view.model.getCurrentLevel();
 
     Array.prototype.forEach.call(list, (it, index) => {
       if (it.checked) {
-        result.push(data[actualLevel].answers[index].isCorrect === it.checked);
+        result.push(currentLevel.answers[index].isCorrect === it.checked);
       }
       return false;
     });

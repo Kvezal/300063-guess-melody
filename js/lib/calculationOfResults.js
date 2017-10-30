@@ -7,7 +7,7 @@ const calculationOfResults = (arrayResults, currentResult) => {
     return `<div class="main-stat">Время вышло!<br>Вы не успели отгадать все мелодии</div>`;
   }
 
-  if (currentResult.lives <= 0) {
+  if (currentResult.lives < 0) {
     return `<div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>`;
   }
 

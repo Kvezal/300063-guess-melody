@@ -1,15 +1,14 @@
 import AbstractView from './abstract-view';
-import {data} from '../data/data';
 
 class GenreLevelView extends AbstractView {
-  constructor(state) {
+  constructor(model) {
     super();
 
-    this.state = state;
+    this.model = model;
   }
 
   get template() {
-    const currentLevel = data[this.state.level];
+    const currentLevel = this.model.getCurrentLevel();
 
     return (
       `<h2 class="title">${currentLevel.question}</h2>
@@ -27,7 +26,7 @@ class GenreLevelView extends AbstractView {
           <div class="player-wrapper">
             <div class="player">
               <audio src="${item.src}"></audio>
-              <button class="player-control player-control--pause"></button>
+              <button class="player-control player-control--play"></button>
               <div class="player-track">
                 <span class="player-status"></span>
               </div>
@@ -43,9 +42,18 @@ class GenreLevelView extends AbstractView {
   bind(element) {
     const answerForm = element.querySelector(`.genre`);
     answerForm.addEventListener(`submit`, this.answerHandler);
+
+    const listOfPlayerControls = element.querySelectorAll(`.player-control`);
+    Array.prototype.forEach.call(listOfPlayerControls, (item) => {
+      item.addEventListener(`click`, this.playerControlClickHandler);
+    });
   }
 
   answerHandler() {
+
+  }
+
+  playerControlClickHandler() {
 
   }
 }

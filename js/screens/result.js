@@ -1,6 +1,6 @@
 import ResultView from '../views/result-view';
 import App from '../application';
-import {displayScreen} from '../lib/screenRender';
+import {displayScreen} from '../lib/utils';
 
 class ResultScreen {
   init(state) {

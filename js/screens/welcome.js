@@ -1,6 +1,6 @@
 import WelcomeView from '../views/welcome-view';
 import App from '../application';
-import {displayScreen} from '../lib/screenRender';
+import {displayScreen} from '../lib/utils';
 
 class WelcomeScreen {
   constructor() {
