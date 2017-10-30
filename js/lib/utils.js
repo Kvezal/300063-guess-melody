@@ -1,6 +1,3 @@
-import App from '../application';
-import {initialState} from '../data/data';
-
 const getElementFromTemplate = (markup) => {
   const containerForNewHTMLElement = document.createElement(`template`);
   containerForNewHTMLElement.innerHTML = markup;
