@@ -43,8 +43,6 @@ class ArtistLevelScreen {
     };
 
     displayElement(this.view.element, mainWrap);
-
-    document.querySelector(`audio`).play();
   }
 }
 

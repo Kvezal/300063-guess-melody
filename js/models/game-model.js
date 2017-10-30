@@ -20,9 +20,6 @@ class GameModel {
   }
 
   setLives(lives) {
-    if (this.state.lives < 0) {
-      throw new RangeError(`Can't set negative lives`);
-    }
     this.state.lives = lives;
   }
 

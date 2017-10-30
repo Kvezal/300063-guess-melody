@@ -25,16 +25,16 @@ const loadState = (dataString) => {
   }
 };
 
-const routes = {
-  [ControllerId.WELCOME]: welcomeScreen,
-  [ControllerId.GAME]: new GameScreen(data),
-  [ControllerId.ARTIST]: showArtistLevel,
-  [ControllerId.GENRE]: showGenreLevel,
-  [ControllerId.RESULT]: resultScreen
-};
-
 class Application {
-  static init() {
+  static init(gameData) {
+    Application.routes = {
+      [ControllerId.WELCOME]: welcomeScreen,
+      [ControllerId.GAME]: new GameScreen(gameData),
+      [ControllerId.ARTIST]: showArtistLevel,
+      [ControllerId.GENRE]: showGenreLevel,
+      [ControllerId.RESULT]: resultScreen
+    };
+
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
       const [id, state] = hashValue.split(`?`);
@@ -45,7 +45,7 @@ class Application {
   }
 
   static changeHash(id, state) {
-    const controller = routes[id];
+    const controller = Application.routes[id];
     if (controller) {
       controller.init(loadState(state));
     }
@@ -64,11 +64,13 @@ class Application {
   }
 
   static changeLevel(model) {
-    const controller = routes[data[model.state.level].type];
+    const controller = Application.routes[data[model.state.level].type];
     if (controller) {
       controller.init(model);
     }
   }
 }
+
+Application.init(data);
 
 export default Application;

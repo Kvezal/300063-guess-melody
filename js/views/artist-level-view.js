@@ -14,7 +14,7 @@ class ArtistLevelView extends AbstractView {
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${currentLevel.question}"></audio>
+          <audio src="${currentLevel.question}" autoplay></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>
