@@ -2,6 +2,8 @@ import App from '../application';
 import GameModel from '../models/game-model';
 import GameView from '../views/game-view';
 import {displayScreen} from '../lib/utils';
+import {initialState} from '../data/data';
+import {getStrokeDasharray, getStrokeDashoffset} from '../lib/utils';
 
 class GameScreen {
   constructor(data) {
@@ -41,7 +43,7 @@ class GameScreen {
     const DOMTimerMinutes = DOMTimerValue.querySelector(`.timer-value-mins`);
     const DOMTimerSeconds = DOMTimerValue.querySelector(`.timer-value-secs`);
     this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds);
-    // const timerLine = document.querySelector(`.timer-line`);
+    const timerLine = document.querySelector(`.timer-line`);
 
     stateGame.timerId = window.setInterval(() => {
       model.tick();
@@ -51,13 +53,12 @@ class GameScreen {
 
       this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds);
 
-      // const ratioOfTimes = stateGame.timer.time / stateGame.time;
+      const ratioOfTimes = stateGame.time / initialState.time;
+      const radius = timerLine.r.baseVal.value;
+      const lengthCircle = getStrokeDasharray(radius);
 
-      // const ratioOfCircumferences = getRadius(ratioOfTimes, timerLine.r.baseVal.value);
-
-      // console.log(stateGame.time, stateGame.timer.time, timerLine.r.baseVal.value)
-      // timerLine.style.strokeDasharray = ratioOfCircumferences.stroke;
-      // timerLine.style.strokeDashoffset = ratioOfCircumferences.offset;
+      timerLine.style.strokeDasharray = lengthCircle;
+      timerLine.style.strokeDashoffset = getStrokeDashoffset(ratioOfTimes, lengthCircle);
 
       if (!model.isCanPlay()) {
         App.showResult(stateGame);
@@ -79,3 +80,11 @@ class GameScreen {
 }
 
 export default GameScreen;
+
+/* this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds);
+
+      const ratioOfTimes = stateGame.time / initialState.time;
+      const radius = timerLine.r.baseVal.value;
+      const lengthCircle = 2325;
+      timerLine.style.strokeDasharray = lengthCircle;
+      timerLine.style.strokeDashoffset = getStrokeDashoffset(lengthCircle, ratioOfTimes);*/
