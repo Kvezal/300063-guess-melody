@@ -14,11 +14,13 @@ const ControllerId = {
 };
 
 const saveState = (state) => {
-  return JSON.stringify(state);
+  state = encodeURIComponent(JSON.stringify(state));
+  return state;
 };
 
 const loadState = (dataString) => {
   try {
+    dataString = decodeURIComponent(dataString);
     return JSON.parse(dataString);
   } catch (err) {
     return initialState;
