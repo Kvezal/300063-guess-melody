@@ -4,7 +4,7 @@ const getElementFromTemplate = (markup) => {
   return containerForNewHTMLElement.content;
 };
 
-const appDisplay = document.querySelector(`.app`);
+const appDisplay = document.querySelector(`.main`);
 
 const clearDisplay = (parent) => {
   while (parent.firstChild) {
