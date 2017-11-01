@@ -1,0 +1,25 @@
+.splash {
+  height: 100%;
+  width: 100%;
+
+  &-line {
+    height: 100%;
+    width: 100%;
+
+    fill: transparent;
+    stroke: $color-orange;
+    stroke-width: 7px;
+    stroke-dasharray: 62;
+    stroke-linecap: round;
+
+    animation-name: spin;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes spin {
+  0%  { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
