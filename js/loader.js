@@ -1,31 +1,21 @@
 import adapt from './data/data-adapter';
+import {loadAudio, loadImage} from './lib/utils';
+import error from './screens/error';
 
 const SERVER_URL = `http://localhost:3000`;
 const DEFAULT_NAME = `user`;
 
-const loadAudio = (url) => {
-  return new Promise((onLoad, onError) => {
-    const audio = new Audio();
-    audio.addEventListener(`canplaythrough`, () => onLoad(audio));
-    audio.onerror = () => onError(`Не удалось загрузить мелодию: ${url}`);
-    audio.src = url;
-  });
-};
-
-const loadImage = (url) => {
-  return new Promise((onLoad, onError) => {
-    const image = new Image();
-    image.onload = () => onLoad(image);
-    image.onerror = () => onError(`Не удалось загрузить изображение: ${url}`);
-    image.src = url;
-  });
-};
-
 class Loader {
   static loadData() {
     return fetch(`${SERVER_URL}/questions`).
-        then((response) => response.json()).
-        then(adapt);
+        then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+        }).
+        then(adapt).
+        catch(error.init);
   }
 
   static loadResults(name = DEFAULT_NAME) {

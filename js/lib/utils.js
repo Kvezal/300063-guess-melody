@@ -1,9 +1,12 @@
+// Получение DOM элемента из разметки
 const getElementFromTemplate = (markup) => {
   const containerForNewHTMLElement = document.createElement(`template`);
   containerForNewHTMLElement.innerHTML = markup;
   return containerForNewHTMLElement.content;
 };
 
+
+// Отображение элементов на странице
 const appDisplay = document.querySelector(`.main`);
 
 const clearDisplay = (parent) => {
@@ -21,6 +24,8 @@ const displayScreen = (screen) => {
   displayElement(screen, appDisplay);
 };
 
+
+// Функционал треков
 const playSong = (element) => {
   element.classList.add(`player-control--pause`);
   element.classList.remove(`player-control--play`);
@@ -33,6 +38,8 @@ const stopSong = (element) => {
   element.parentElement.querySelector(`audio`).pause();
 };
 
+
+// Расчет параметров кругового таймера
 const getStrokeDasharray = (radius) => {
   return Math.floor(2 * Math.PI * radius);
 };
@@ -41,4 +48,24 @@ const getStrokeDashoffset = (ratioOfTimes, lengthCircle) => {
   return (1 - ratioOfTimes) * lengthCircle;
 };
 
-export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong, getStrokeDasharray, getStrokeDashoffset};
+
+// Функции для загрузки файлов с внешних ресурсов
+const loadAudio = (url) => {
+  return new Promise((onLoad, onError) => {
+    const audio = new Audio();
+    audio.addEventListener(`canplaythrough`, () => onLoad(audio));
+    audio.onerror = () => onError(`Не удалось загрузить мелодию: ${url}`);
+    audio.src = url;
+  });
+};
+
+const loadImage = (url) => {
+  return new Promise((onLoad, onError) => {
+    const image = new Image();
+    image.onload = () => onLoad(image);
+    image.onerror = () => onError(`Не удалось загрузить изображение: ${url}`);
+    image.src = url;
+  });
+};
+
+export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong, getStrokeDasharray, getStrokeDashoffset, loadAudio, loadImage};
