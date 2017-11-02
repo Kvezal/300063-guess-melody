@@ -1,12 +1,13 @@
 import welcomeScreen from './screens/welcome';
+import GameModel from './models/game-model';
 import GameScreen from './screens/game';
 import resultScreen from './screens/result';
 import showArtistLevel from './screens/artist-level';
 import showGenreLevel from './screens/genre-level';
-import {initialState} from './data/data';
 import Loader from './loader';
 import SplashScreen from './screens/splash';
 import error from './screens/error';
+import {getCurrentResult} from './lib/utils';
 
 const ControllerId = {
   WELCOME: ``,
@@ -14,20 +15,6 @@ const ControllerId = {
   ARTIST: `artist`,
   GENRE: `genre`,
   RESULT: `result`
-};
-
-const saveState = (state) => {
-  state = encodeURIComponent(JSON.stringify(state));
-  return state;
-};
-
-const loadState = (dataString) => {
-  try {
-    dataString = decodeURIComponent(dataString);
-    return JSON.parse(dataString);
-  } catch (err) {
-    return initialState;
-  }
 };
 
 class Application {
@@ -40,32 +27,49 @@ class Application {
       [ControllerId.RESULT]: resultScreen
     };
 
-    const hashChangeHandler = () => {
-      const hashValue = location.hash.replace(`#`, ``);
-      const [id, state] = hashValue.split(`?`);
-      Application.changeHash(id, state);
-    };
-    window.onhashchange = hashChangeHandler;
-    hashChangeHandler();
+    Application.showWelcome();
   }
 
-  static changeHash(id, state) {
-    const controller = this.routes[id];
+  static changeHash(id) {
+    const controller = Application.routes[id];
     if (controller) {
-      controller.init(loadState(state));
+      controller.init();
     }
   }
 
   static showWelcome() {
-    location.hash = ControllerId.WELCOME;
+    Application.routes[ControllerId.WELCOME].init();
   }
 
-  static showGame(state = initialState) {
-    location.hash = `${ControllerId.GAME}?${saveState(state)}`;
+  static showGame(state) {
+    Application.routes[ControllerId.GAME].init(state);
   }
 
   static showResult(state) {
-    location.hash = `${ControllerId.RESULT}?${saveState(state)}`;
+    window.clearInterval(state.timerId);
+
+    let listResults = [];
+    const currentResult = getCurrentResult(state);
+
+    if (state.answers.length < 10) {
+      Application.routes[ControllerId.RESULT].init(currentResult, listResults);
+      return;
+    }
+
+    const findCurrentResult = (arrayResults) => {
+      listResults = arrayResults;
+      return currentResult;
+    };
+
+    if (state.answers.length === 10) {
+      Loader.loadResults().
+          then(findCurrentResult).
+          then(Loader.saveResults).
+          then(() => {
+            Application.routes[ControllerId.RESULT].init(currentResult, listResults);
+          }).
+          catch(error.init);
+    }
   }
 
   static changeLevel(model) {

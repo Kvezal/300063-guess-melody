@@ -1,3 +1,6 @@
+import {initialState} from '../data/data';
+import countPoints from '../lib/countPoints';
+
 // Получение DOM элемента из разметки
 const getElementFromTemplate = (markup) => {
   const containerForNewHTMLElement = document.createElement(`template`);
@@ -94,4 +97,38 @@ const downloadPartOfAudio = (listAudio, lowIndex, pack) => {
   });
 };
 
-export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong, getStrokeDasharray, getStrokeDashoffset, loadImage, downloadPartOfAudio};
+const cloneObject = (obj) => {
+  const newObj = {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = obj[key];
+    }
+  }
+  return newObj;
+};
+
+const getCurrentResult = (state) => {
+  const counterPoints = countPoints(state.answers, state.lives);
+  return {
+    points: counterPoints.points,
+    numberOfQuickAnswers: counterPoints.numberOfQuickAnswers,
+    lives: state.lives,
+    time: state.time,
+    timeLeft: initialState.time - state.time,
+    id: +new Date()
+  };
+};
+
+export {
+  getElementFromTemplate,
+  displayScreen,
+  displayElement,
+  playSong,
+  stopSong,
+  getStrokeDasharray,
+  getStrokeDashoffset,
+  loadImage,
+  downloadPartOfAudio,
+  cloneObject,
+  getCurrentResult
+};

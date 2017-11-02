@@ -1,7 +1,6 @@
 import AbstractView from './abstract-view';
-import countPoints from '../lib/countPoints';
 import calculationOfResults from '../lib/calculationOfResults';
-import {initialState, arrayResults} from '../data/data';
+// import {arrayResults} from '../data/data';
 
 const screens = {
   win: {
@@ -16,10 +15,11 @@ const screens = {
 };
 
 class ResultView extends AbstractView {
-  constructor(state) {
+  constructor(currentResult, listResults) {
     super();
 
-    this.state = state;
+    this.currentResult = currentResult;
+    this.listResults = listResults;
   }
 
   get template() {
@@ -29,7 +29,7 @@ class ResultView extends AbstractView {
 
         <h2 class="title">${screens[this.type].title}</h2>
 
-        ${calculationOfResults(arrayResults, this.currentResult)}
+        ${calculationOfResults(this.listResults, this.currentResult)}
 
         <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
       </section>`
@@ -46,18 +46,6 @@ class ResultView extends AbstractView {
     return `win`;
   }
 
-  get currentResult() {
-    const counterPoints = countPoints(this.state.answers, this.state.lives);
-    return {
-      points: counterPoints.points,
-      numberOfQuickAnswers: counterPoints.numberOfQuickAnswers,
-      lives: this.state.lives,
-      time: this.state.time,
-      timeLeft: initialState.time - this.state.time,
-      id: arrayResults.length + 1
-    };
-  }
-
   bind(element) {
     const buttonReplay = element.querySelector(`.main-replay`);
     buttonReplay.onclick = (evt) => {
@@ -65,10 +53,6 @@ class ResultView extends AbstractView {
 
       this.replayHandler();
     };
-  }
-
-  init() {
-
   }
 
   replayHandler() {

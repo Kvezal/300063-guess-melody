@@ -2,8 +2,8 @@ import adapt from './data/data-adapter';
 import {loadImage, downloadPartOfAudio} from './lib/utils';
 import error from './screens/error';
 
-const SERVER_URL = `http://localhost:3000`;
-const DEFAULT_NAME = `user`;
+const SERVER_URL = `https://es.dump.academy/guess-melody`;
+const DEFAULT_NAME = `kvezal300063`;
 
 class Loader {
   static loadData() {
@@ -20,7 +20,12 @@ class Loader {
 
   static loadResults(name = DEFAULT_NAME) {
     return fetch(`${SERVER_URL}/stats/${name}`)
-        .then((response) => response.json());
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+        });
   }
 
   static saveResults(data, name = DEFAULT_NAME) {
