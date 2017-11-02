@@ -89,7 +89,6 @@ const data = Loader.loadData();
 
 data.
     then(Loader.loadResourses).
-    then((resourses) => Promise.all(resourses)).
     then(openPage).
     catch(error.init);
 

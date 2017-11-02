@@ -1,5 +1,5 @@
 import adapt from './data/data-adapter';
-import {loadAudio, loadImage} from './lib/utils';
+import {loadImage, downloadPartOfAudio} from './lib/utils';
 import error from './screens/error';
 
 const SERVER_URL = `http://localhost:3000`;
@@ -36,7 +36,7 @@ class Loader {
   }
 
   static loadResourses(resourses) {
-    const listOfAudio = new Set();
+    let listOfAudio = new Set();
     const listOfImage = new Set();
 
     resourses.forEach((it) => {
@@ -52,7 +52,7 @@ class Loader {
 
     [...listOfImage].map((it) => loadImage(it));
 
-    return [...listOfAudio].map((it) => loadAudio(it));
+    return downloadPartOfAudio([...listOfAudio], 0, 4);
   }
 }
 
