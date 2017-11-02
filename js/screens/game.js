@@ -2,6 +2,8 @@ import App from '../application';
 import GameModel from '../models/game-model';
 import GameView from '../views/game-view';
 import {displayScreen} from '../lib/utils';
+import {initialState} from '../data/data';
+import {getStrokeDasharray, getStrokeDashoffset} from '../lib/utils';
 
 class GameScreen {
   constructor(data) {
@@ -16,7 +18,7 @@ class GameScreen {
     App.changeLevel(this.view.model);
   }
 
-  displayTimer(time, DOMMinutes, DOMSeconds) {
+  displayTimer(time, DOMMinutes, DOMSeconds, timerLine) {
     const stateGame = this.view.model.state;
 
     let minutes = Math.trunc(stateGame.time / 60);
@@ -30,6 +32,13 @@ class GameScreen {
       seconds = `0${seconds}`;
     }
     DOMSeconds.textContent = seconds;
+
+    const ratioOfTimes = stateGame.time / initialState.time;
+    const radius = timerLine.r.baseVal.value;
+    const lengthCircle = getStrokeDasharray(radius);
+
+    timerLine.style.strokeDasharray = lengthCircle;
+    timerLine.style.strokeDashoffset = getStrokeDashoffset(ratioOfTimes, lengthCircle);
   }
 
   tick() {
@@ -40,8 +49,8 @@ class GameScreen {
     const DOMTimerValue = document.querySelector(`.timer-value`);
     const DOMTimerMinutes = DOMTimerValue.querySelector(`.timer-value-mins`);
     const DOMTimerSeconds = DOMTimerValue.querySelector(`.timer-value-secs`);
-    this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds);
-    // const timerLine = document.querySelector(`.timer-line`);
+    const timerLine = document.querySelector(`.timer-line`);
+    this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds, timerLine);
 
     stateGame.timerId = window.setInterval(() => {
       model.tick();
@@ -49,15 +58,7 @@ class GameScreen {
         DOMTimerValue.classList.add(`timer-value--finished`);
       }
 
-      this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds);
-
-      // const ratioOfTimes = stateGame.timer.time / stateGame.time;
-
-      // const ratioOfCircumferences = getRadius(ratioOfTimes, timerLine.r.baseVal.value);
-
-      // console.log(stateGame.time, stateGame.timer.time, timerLine.r.baseVal.value)
-      // timerLine.style.strokeDasharray = ratioOfCircumferences.stroke;
-      // timerLine.style.strokeDashoffset = ratioOfCircumferences.offset;
+      this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds, timerLine);
 
       if (!model.isCanPlay()) {
         App.showResult(stateGame);
@@ -79,3 +80,11 @@ class GameScreen {
 }
 
 export default GameScreen;
+
+/* this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds);
+
+      const ratioOfTimes = stateGame.time / initialState.time;
+      const radius = timerLine.r.baseVal.value;
+      const lengthCircle = 2325;
+      timerLine.style.strokeDasharray = lengthCircle;
+      timerLine.style.strokeDashoffset = getStrokeDashoffset(lengthCircle, ratioOfTimes);*/

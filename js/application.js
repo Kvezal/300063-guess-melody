@@ -3,7 +3,10 @@ import GameScreen from './screens/game';
 import resultScreen from './screens/result';
 import showArtistLevel from './screens/artist-level';
 import showGenreLevel from './screens/genre-level';
-import {data, initialState} from './data/data';
+import {initialState} from './data/data';
+import Loader from './loader';
+import SplashScreen from './screens/splash';
+import error from './screens/error';
 
 const ControllerId = {
   WELCOME: ``,
@@ -14,11 +17,13 @@ const ControllerId = {
 };
 
 const saveState = (state) => {
-  return JSON.stringify(state);
+  state = encodeURIComponent(JSON.stringify(state));
+  return state;
 };
 
 const loadState = (dataString) => {
   try {
+    dataString = decodeURIComponent(dataString);
     return JSON.parse(dataString);
   } catch (err) {
     return initialState;
@@ -38,14 +43,14 @@ class Application {
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
       const [id, state] = hashValue.split(`?`);
-      this.changeHash(id, state);
+      Application.changeHash(id, state);
     };
     window.onhashchange = hashChangeHandler;
     hashChangeHandler();
   }
 
   static changeHash(id, state) {
-    const controller = Application.routes[id];
+    const controller = this.routes[id];
     if (controller) {
       controller.init(loadState(state));
     }
@@ -64,13 +69,28 @@ class Application {
   }
 
   static changeLevel(model) {
-    const controller = Application.routes[data[model.state.level].type];
+    const controller = this.routes[model.data[model.state.level].type];
     if (controller) {
       controller.init(model);
     }
   }
 }
 
-Application.init(data);
+const openPage = () => {
+  data.
+      then(Application.init).
+      catch(error.init);
+};
+
+const splash = new SplashScreen();
+splash.start();
+
+const data = Loader.loadData();
+
+data.
+    then(Loader.loadResourses).
+    then((resourses) => Promise.all(resourses)).
+    then(openPage).
+    catch(error.init);
 
 export default Application;

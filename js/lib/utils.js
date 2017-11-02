@@ -4,7 +4,7 @@ const getElementFromTemplate = (markup) => {
   return containerForNewHTMLElement.content;
 };
 
-const appDisplay = document.querySelector(`.app`);
+const appDisplay = document.querySelector(`.main`);
 
 const clearDisplay = (parent) => {
   while (parent.firstChild) {
@@ -33,4 +33,12 @@ const stopSong = (element) => {
   element.parentElement.querySelector(`audio`).pause();
 };
 
-export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong};
+const getStrokeDasharray = (radius) => {
+  return Math.floor(2 * Math.PI * radius);
+};
+
+const getStrokeDashoffset = (ratioOfTimes, lengthCircle) => {
+  return (1 - ratioOfTimes) * lengthCircle;
+};
+
+export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong, getStrokeDasharray, getStrokeDashoffset};
