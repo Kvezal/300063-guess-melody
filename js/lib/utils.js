@@ -70,6 +70,11 @@ const loadImage = (url) => {
   });
 };
 
+
+// Функция downloadPartOfAudio позволяет разбить поток запросов к аудиофайлов для
+// корректной работы хрома, пробовал задавать хначение pack больше 5, в результате
+// падала надежность работы приложения, в FF и в других браузерах все работает
+// правильно и без этой функции
 const downloadPartOfAudio = (listAudio, lowIndex, pack) => {
   return new Promise((resolve) => {
 
@@ -89,4 +94,4 @@ const downloadPartOfAudio = (listAudio, lowIndex, pack) => {
   });
 };
 
-export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong, getStrokeDasharray, getStrokeDashoffset, loadAudio, loadImage, downloadPartOfAudio};
+export {getElementFromTemplate, displayScreen, displayElement, playSong, stopSong, getStrokeDasharray, getStrokeDashoffset, loadImage, downloadPartOfAudio};
