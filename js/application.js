@@ -61,6 +61,7 @@ class Application {
     };
 
     if (state.answers.length === 10) {
+      splash.start();
       Loader.loadResults().
           then(findCurrentResult).
           then(Loader.saveResults).
