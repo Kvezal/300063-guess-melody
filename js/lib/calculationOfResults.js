@@ -9,15 +9,15 @@ const calculationOfResults = (arrayResults, currentResult) => {
     return `<div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>`;
   }
 
-  arrayResults.push(currentResult);
+  const generalResults = arrayResults.concat([currentResult]);
 
-  arrayResults.sort((left, right) => left.points - right.points);
+  generalResults.sort((left, right) => left.points - right.points);
 
-  const numberOfPlayers = arrayResults.length;
+  const numberOfPlayers = generalResults.length;
 
   let placeOfPlayer;
 
-  arrayResults.forEach((item, index) => {
+  generalResults.forEach((item, index) => {
     if (item.id === currentResult.id) {
       placeOfPlayer = numberOfPlayers - index;
     }

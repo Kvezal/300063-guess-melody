@@ -1,5 +1,4 @@
 import welcomeScreen from './screens/welcome';
-import GameModel from './models/game-model';
 import GameScreen from './screens/game';
 import resultScreen from './screens/result';
 import showArtistLevel from './screens/artist-level';
