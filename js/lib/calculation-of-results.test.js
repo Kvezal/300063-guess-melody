@@ -1,5 +1,5 @@
 import assert from 'assert';
-import calculationOfResults from './calculationOfResults';
+import calculationOfResults from './calculation-of-results';
 
 const arrayResults = [
   {

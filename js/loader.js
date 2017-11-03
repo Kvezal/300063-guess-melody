@@ -1,6 +1,6 @@
 import adapt from './data/data-adapter';
-import {loadImage, downloadPartOfAudio} from './lib/utils';
-import error from './screens/error';
+import {loadImage, downloadPartOfAudio} from './lib/file-load';
+import error from './screens/error-screen';
 
 const SERVER_URL = `https://es.dump.academy/guess-melody`;
 const DEFAULT_NAME = `kvezal300063`;

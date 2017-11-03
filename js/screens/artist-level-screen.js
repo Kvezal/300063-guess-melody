@@ -1,6 +1,8 @@
 import ArtistLevelView from '../views/artist-level-view';
 import App from '../application';
-import {displayElement, playSong, stopSong} from '../lib/utils';
+import Utils from '../lib/utils';
+
+const START_INDEX_IN_INPUT_ID = 7;
 
 class ArtistLevelScreen {
   init(model) {
@@ -14,17 +16,16 @@ class ArtistLevelScreen {
       evt.preventDefault();
 
       if (evt.currentTarget.classList.contains(`player-control--play`)) {
-        playSong(evt.currentTarget);
-      } else {
-        stopSong(evt.currentTarget);
+        return Utils.playSong(evt.currentTarget);
       }
+      return Utils.stopSong(evt.currentTarget);
     };
 
     this.view.answerHandler = (evt) => {
       evt.preventDefault();
 
       const currentLevel = model.getCurrentLevel();
-      const answerIndex = evt.currentTarget.htmlFor.slice(7);
+      const answerIndex = evt.currentTarget.htmlFor.slice(START_INDEX_IN_INPUT_ID);
       const answer = currentLevel.answers[answerIndex].isCorrect;
 
       stateGame.level = currentLevel.nextLevel;
@@ -42,7 +43,7 @@ class ArtistLevelScreen {
       }
     };
 
-    displayElement(this.view.element, mainWrap);
+    Utils.displayElement(this.view.element, mainWrap);
   }
 }
 

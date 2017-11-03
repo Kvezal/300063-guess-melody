@@ -1,6 +1,5 @@
-const getLevel = (level, data) => {
-  return data[level];
-};
+import Utils from '../lib/utils';
+import {GameParameters} from '../data/data';
 
 class GameModel {
   constructor(data) {
@@ -12,7 +11,11 @@ class GameModel {
   }
 
   isCanPlay() {
-    return (this.state.lives) >= 0 && (this.state.time > 0) && (this.state.answers.length < 10);
+    return (
+      (this.state.lives) >= GameParameters.MIN_COUNT_LIVES &&
+      (this.state.time > GameParameters.MIN_COUNT_TIME) &&
+      (this.state.answers.length < GameParameters.NUMBER_ANSWERS)
+    );
   }
 
   die() {
@@ -28,12 +31,12 @@ class GameModel {
   }
 
   addAnswer(answer, time) {
-    time = (new Date() - time) / 1000;
+    time = (new Date() - time) / GameParameters.AMOUNT_MILISECONDS_IN_SECONDS;
     this.state.answers.push({answer, time});
   }
 
   getCurrentLevel() {
-    return getLevel(this.state.level, this.data);
+    return Utils.getLevel(this.state.level, this.data);
   }
 }
 

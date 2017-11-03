@@ -1,7 +1,5 @@
 import AbstractView from './abstract-view';
 
-const ENTER_KEYCODE = 13;
-
 class WelcomeView extends AbstractView {
   constructor() {
     super();
@@ -29,18 +27,7 @@ class WelcomeView extends AbstractView {
       evt.preventDefault();
       this.startHandler();
     };
-
-    buttonPlay.onkeydown = (evt) => {
-      if (evt.keyCode === ENTER_KEYCODE) {
-        this.startHandler();
-      }
-    };
   }
-
-  startHandler() {
-
-  }
-
 }
 
 export default WelcomeView;

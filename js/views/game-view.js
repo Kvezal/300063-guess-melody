@@ -36,10 +36,6 @@ class GameView extends AbstractView {
     }
     return amountMistakesTemplate;
   }
-
-  init() {
-
-  }
 }
 
 export default GameView;

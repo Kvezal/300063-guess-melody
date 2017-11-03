@@ -1,5 +1,5 @@
 import assert from 'assert';
-import countPoints from './countPoints';
+import countPoints from './count-points';
 
 suite(`Function of countPoints works correct`, () => {
   test(`The player answered less than 10 question`, () => {

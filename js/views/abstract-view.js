@@ -1,4 +1,4 @@
-import {getElementFromTemplate} from '../lib/utils';
+import Utils from '../lib/utils';
 
 class AbstractView {
   get template() {
@@ -19,7 +19,7 @@ class AbstractView {
   }
 
   render() {
-    return getElementFromTemplate(this.template);
+    return Utils.getElementFromTemplate(this.template);
   }
 }
 

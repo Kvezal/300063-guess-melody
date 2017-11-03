@@ -1,11 +1,13 @@
-import {initialState} from '../data/data';
+import {initialState, GameParameters} from '../data/data';
+
+const PERCENTAGES = 100;
 
 const calculationOfResults = (arrayResults, currentResult) => {
-  if (currentResult.time <= 0) {
+  if (currentResult.time <= GameParameters.MIN_COUNT_TIME) {
     return `<div class="main-stat">Время вышло!<br>Вы не успели отгадать все мелодии</div>`;
   }
 
-  if (currentResult.lives < 0) {
+  if (currentResult.lives < GameParameters.MIN_COUNT_LIVES) {
     return `<div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>`;
   }
 
@@ -23,10 +25,10 @@ const calculationOfResults = (arrayResults, currentResult) => {
     }
   });
 
-  const betterThanOtherPlayer = (1 - placeOfPlayer / numberOfPlayers) * 100;
+  const betterThanOtherPlayer = (numberOfPlayers - placeOfPlayer) * PERCENTAGES / numberOfPlayers;
   const mistakes = initialState.lives - currentResult.lives;
-  const minutes = Math.floor(currentResult.timeLeft / 60);
-  const seconds = currentResult.timeLeft % 60;
+  const minutes = Math.floor(currentResult.timeLeft / GameParameters.COUNT_OF_SECONDS_IN_MINUTE);
+  const seconds = currentResult.timeLeft % GameParameters.COUNT_OF_SECONDS_IN_MINUTE;
 
   return (
     `<div class="main-stat">За&nbsp;${minutes}&nbsp;минуты и ${seconds}&nbsp;секунд
