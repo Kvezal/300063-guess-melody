@@ -1,8 +1,7 @@
 import AbstractView from './abstract-view';
-import calculationOfResults from '../lib/calculationOfResults';
-// import {arrayResults} from '../data/data';
+import calculationOfResults from '../lib/calculation-of-results';
 
-const screens = {
+const Screens = {
   win: {
     title: `Вы настоящий меломан!`
   },
@@ -27,7 +26,7 @@ class ResultView extends AbstractView {
       `<section class="main main--result">
         <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
-        <h2 class="title">${screens[this.type].title}</h2>
+        <h2 class="title">${Screens[this.type].title}</h2>
 
         ${calculationOfResults(this.listResults, this.currentResult)}
 
@@ -53,10 +52,6 @@ class ResultView extends AbstractView {
 
       this.replayHandler();
     };
-  }
-
-  replayHandler() {
-
   }
 }
 

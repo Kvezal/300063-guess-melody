@@ -1,6 +1,6 @@
 import GenreLevelView from '../views/genre-level-view';
 import App from '../application';
-import {displayElement, playSong, stopSong} from '../lib/utils';
+import Utils from '../lib/utils';
 
 class GenreLevelScreen {
   init(model) {
@@ -15,16 +15,16 @@ class GenreLevelScreen {
 
       const lastPlayerControlPlay = document.querySelector(`.player-control--pause`);
       if (!lastPlayerControlPlay) {
-        playSong(evt.currentTarget);
+        Utils.playSong(evt.currentTarget);
         return;
       }
       if (lastPlayerControlPlay === evt.currentTarget) {
-        stopSong(evt.currentTarget);
+        Utils.stopSong(evt.currentTarget);
         return;
       }
       if (lastPlayerControlPlay !== evt.currentTarget) {
-        stopSong(lastPlayerControlPlay);
-        playSong(evt.currentTarget);
+        Utils.stopSong(lastPlayerControlPlay);
+        Utils.playSong(evt.currentTarget);
       }
     };
 
@@ -57,7 +57,7 @@ class GenreLevelScreen {
       }
     };
 
-    displayElement(this.view.element, mainWrap);
+    Utils.displayElement(this.view.element, mainWrap);
   }
 
   getCheckedFormElement(list) {

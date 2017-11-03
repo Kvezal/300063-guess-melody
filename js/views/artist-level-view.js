@@ -51,14 +51,6 @@ class ArtistLevelView extends AbstractView {
       it.onclick = (evt) => this.answerHandler(evt);
     });
   }
-
-  answerHandler() {
-
-  }
-
-  playerControlClickHandler() {
-
-  }
 }
 
 export default ArtistLevelView;

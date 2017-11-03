@@ -1,8 +1,7 @@
 import WelcomeView from '../views/welcome-view';
 import App from '../application';
-import {displayScreen} from '../lib/utils';
+import Utils from '../lib/utils';
 import {initialState} from '../data/data';
-import {cloneObject} from '../lib/utils';
 
 class WelcomeScreen {
   constructor() {
@@ -11,12 +10,12 @@ class WelcomeScreen {
 
   init() {
     this.view.startHandler = () => {
-      const state = cloneObject(initialState);
+      const state = Object.assign({}, initialState);
       state.answers = [];
       App.showGame(state);
     };
 
-    displayScreen(this.view.element);
+    Utils.displayScreen(this.view.element);
   }
 }
 

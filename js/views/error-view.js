@@ -20,10 +20,6 @@ class ErrorView extends AbstractView {
     const closeError = element.querySelector(`.error-message__button`);
     closeError.onclick = (evt) => this.closeErrorClickHandler(evt);
   }
-
-  closeErrorClickHandler() {
-
-  }
 }
 
 export default ErrorView;

@@ -1,6 +1,6 @@
 import ResultView from '../views/result-view';
 import App from '../application';
-import {displayScreen} from '../lib/utils';
+import Utils from '../lib/utils';
 
 class ResultScreen {
   init(currentResult, listResults) {
@@ -8,7 +8,7 @@ class ResultScreen {
     this.view.replayHandler = () => {
       App.showWelcome();
     };
-    displayScreen(this.view.element);
+    Utils.displayScreen(this.view.element);
   }
 }
 

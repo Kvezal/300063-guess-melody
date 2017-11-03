@@ -48,14 +48,6 @@ class GenreLevelView extends AbstractView {
       item.addEventListener(`click`, this.playerControlClickHandler);
     });
   }
-
-  answerHandler() {
-
-  }
-
-  playerControlClickHandler() {
-
-  }
 }
 
 export default GenreLevelView;

@@ -1,12 +1,13 @@
-import welcomeScreen from './screens/welcome';
-import GameScreen from './screens/game';
-import resultScreen from './screens/result';
-import showArtistLevel from './screens/artist-level';
-import showGenreLevel from './screens/genre-level';
+import welcomeScreen from './screens/welcome-screen';
+import GameScreen from './screens/game-screen';
+import resultScreen from './screens/result-screen';
+import showArtistLevel from './screens/artist-level-screen';
+import showGenreLevel from './screens/genre-level-screen';
 import Loader from './loader';
-import SplashScreen from './screens/splash';
-import error from './screens/error';
-import {getCurrentResult} from './lib/utils';
+import SplashScreen from './screens/splash-screen';
+import error from './screens/error-screen';
+import Utils from './lib/utils';
+import {GameParameters} from './data/data';
 
 const ControllerId = {
   WELCOME: ``,
@@ -48,9 +49,9 @@ class Application {
     window.clearInterval(state.timerId);
 
     let listResults = [];
-    const currentResult = getCurrentResult(state);
+    const currentResult = Utils.getCurrentResult(state);
 
-    if (state.answers.length < 10) {
+    if (state.answers.length < GameParameters.NUMBER_ANSWERS) {
       Application.routes[ControllerId.RESULT].init(currentResult, listResults);
       return;
     }
@@ -60,7 +61,7 @@ class Application {
       return currentResult;
     };
 
-    if (state.answers.length === 10) {
+    if (state.answers.length === GameParameters.NUMBER_ANSWERS) {
       splash.start();
       Loader.loadResults().
           then(findCurrentResult).

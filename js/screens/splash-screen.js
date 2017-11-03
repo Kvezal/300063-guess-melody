@@ -1,5 +1,5 @@
 import AbstractView from '../views/abstract-view';
-import {displayScreen} from '../lib/utils';
+import Utils from '../lib/utils';
 
 class SplashScreen extends AbstractView {
   constructor() {
@@ -18,7 +18,7 @@ class SplashScreen extends AbstractView {
   }
 
   start() {
-    displayScreen(this.element);
+    Utils.displayScreen(this.element);
   }
 }
 
