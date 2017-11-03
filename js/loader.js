@@ -57,7 +57,7 @@ class Loader {
 
     [...listOfImage].map((it) => loadImage(it));
 
-    return downloadPartOfAudio([...listOfAudio], 0, 4);
+    return downloadPartOfAudio([...listOfAudio], 0, 1);
   }
 }
 
