@@ -1,7 +1,15 @@
-import {initialState} from '../data/data';
+import {initialState, GameParameters} from '../data/data';
 import countPoints from '../lib/count-points';
 
 const appDisplay = document.querySelector(`.main`);
+
+const getStrokeDasharray = (radius) => {
+  return Math.floor(2 * Math.PI * radius);
+};
+
+const getStrokeDashoffset = (ratioOfTimes, lengthCircle) => {
+  return (1 - ratioOfTimes) * lengthCircle;
+};
 
 class Utils {
   static getElementFromTemplate(markup) {
@@ -37,14 +45,6 @@ class Utils {
     element.parentElement.querySelector(`audio`).pause();
   }
 
-  static getStrokeDasharray(radius) {
-    return Math.floor(2 * Math.PI * radius);
-  }
-
-  static getStrokeDashoffset(ratioOfTimes, lengthCircle) {
-    return (1 - ratioOfTimes) * lengthCircle;
-  }
-
   static getCurrentResult(state) {
     const counterPoints = countPoints(state.answers, state.lives);
     return {
@@ -55,6 +55,26 @@ class Utils {
       timeLeft: initialState.time - state.time,
       id: +new Date()
     };
+  }
+
+  static changeTimer(time, timerValue, timerLine) {
+    const timerMinutes = timerValue.querySelector(`.timer-value-mins`);
+    const timerSeconds = timerValue.querySelector(`.timer-value-secs`);
+
+    let minutes = Math.trunc(time / GameParameters.COUNT_OF_SECONDS_IN_MINUTE);
+    timerMinutes.textContent = (minutes < GameParameters.DECIMAL_NUMBER_SYSTEM) ?
+      `0${minutes}` : minutes;
+
+    let seconds = Math.trunc(time % GameParameters.COUNT_OF_SECONDS_IN_MINUTE);
+    timerSeconds.textContent = (seconds < GameParameters.DECIMAL_NUMBER_SYSTEM) ?
+      `0${seconds}` : seconds;
+
+    const ratioOfTimes = time / initialState.time;
+    const radius = timerLine.r.baseVal.value;
+    const lengthCircle = getStrokeDasharray(radius);
+
+    timerLine.style.strokeDasharray = lengthCircle;
+    timerLine.style.strokeDashoffset = getStrokeDashoffset(ratioOfTimes, lengthCircle);
   }
 
   static getLevel(level, data) {

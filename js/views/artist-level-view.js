@@ -9,6 +9,7 @@ class ArtistLevelView extends AbstractView {
 
   get template() {
     const currentLevel = this.model.getCurrentLevel();
+    this._answers = currentLevel.answers;
 
     return (
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
@@ -22,13 +23,13 @@ class ArtistLevelView extends AbstractView {
         </div>
       </div>
       <form class="main-list">
-        ${this.getArtistAnswerOptions(currentLevel.answers)}
+        ${this.artistAnswerOptions}
       </form>`
     );
   }
 
-  getArtistAnswerOptions(answers) {
-    return [...answers].map((item, index) => {
+  get artistAnswerOptions() {
+    return [...this._answers].map((item, index) => {
       return (
         `<div class="main-answer-wrapper">
           <input class="main-answer-r" type="radio" id="answer-${index}" name="answer" value="val-${index}"/>

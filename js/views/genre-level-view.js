@@ -9,18 +9,19 @@ class GenreLevelView extends AbstractView {
 
   get template() {
     const currentLevel = this.model.getCurrentLevel();
+    this._answers = currentLevel.answers;
 
     return (
       `<h2 class="title">${currentLevel.question}</h2>
       <form class="genre">
-        ${this.getGenreAnswerOptions(currentLevel.answers)}
+        ${this.genreAnswerOptions}
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>`
     );
   }
 
-  getGenreAnswerOptions(answers) {
-    return [...answers].map((item, index) => {
+  get genreAnswerOptions() {
+    return [...this._answers].map((item, index) => {
       return (
         `<div class="genre-answer">
           <div class="player-wrapper">

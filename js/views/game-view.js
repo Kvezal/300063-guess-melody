@@ -1,5 +1,9 @@
 import AbstractView from './abstract-view';
 import {initialState} from '../data/data';
+import Utils from '../lib/utils';
+
+const TIME_LEFT = 30;
+const ONE_SECOND = 1000;
 
 class GameView extends AbstractView {
   constructor(model) {
@@ -22,7 +26,7 @@ class GameView extends AbstractView {
           --><span class="timer-value-dots">:</span><!--
           --><span class="timer-value-secs">00</span>
         </div>
-        <div class="main-mistakes">${this.getAmountMistakes(this.model.state, this.model.state.lives)}</div>
+        <div class="main-mistakes">${this.amountMistakes}</div>
         <div class="main-wrap"></div>
       </section>`
     );
@@ -32,13 +36,36 @@ class GameView extends AbstractView {
     return `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`;
   }
 
-  getAmountMistakes(state, amountLives) {
-    const amountMistakes = initialState.lives - amountLives;
+  get amountMistakes() {
+    const amountMistakes = initialState.lives - this.model.state.lives;
     const amountMistakesTemplate = [];
     for (let i = 0; i < amountMistakes; i++) {
       amountMistakesTemplate.push(this.templateMistake);
     }
     return amountMistakesTemplate.join(` `);
+  }
+
+  bind(element) {
+    const timerValue = element.querySelector(`.timer-value`);
+    const timerLine = element.querySelector(`.timer-line`);
+    this.tick(timerValue, timerLine);
+  }
+
+  tick(timerValue, timerLine) {
+    const model = this.model;
+    const state = model.state;
+
+    window.clearTimeout(state.timerId);
+    Utils.changeTimer(state.time, timerValue, timerLine);
+
+    state.timerId = window.setTimeout(() => {
+      model.tick();
+
+      if (state.time <= TIME_LEFT && !timerValue.classList.contains(`timer-value--finished`)) {
+        timerValue.classList.add(`timer-value--finished`);
+      }
+      this.tick(timerValue, timerLine);
+    }, ONE_SECOND);
   }
 }
 
