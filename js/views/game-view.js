@@ -28,13 +28,17 @@ class GameView extends AbstractView {
     );
   }
 
+  get templateMistake() {
+    return `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`;
+  }
+
   getAmountMistakes(state, amountLives) {
     const amountMistakes = initialState.lives - amountLives;
-    let amountMistakesTemplate = ``;
+    const amountMistakesTemplate = [];
     for (let i = 0; i < amountMistakes; i++) {
-      amountMistakesTemplate += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49"> `;
+      amountMistakesTemplate.push(this.templateMistake);
     }
-    return amountMistakesTemplate;
+    return amountMistakesTemplate.join(` `);
   }
 }
 

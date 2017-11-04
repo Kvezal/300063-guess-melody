@@ -20,20 +20,16 @@ class GameScreen {
     App.changeLevel(this.view.model);
   }
 
-  displayTimer(time, DOMMinutes, DOMSeconds, timerLine) {
+  displayTimer(time, domMinutes, domSeconds, timerLine) {
     const stateGame = this.view.model.state;
 
     let minutes = Math.trunc(stateGame.time / GameParameters.COUNT_OF_SECONDS_IN_MINUTE);
-    if (minutes < GameParameters.DECIMAL_NUMBER_SYSTEM) {
-      minutes = `0${minutes}`;
-    }
-    DOMMinutes.textContent = minutes;
+    domMinutes.textContent = (minutes < GameParameters.DECIMAL_NUMBER_SYSTEM) ?
+      `0${minutes}` : minutes;
 
     let seconds = Math.trunc(stateGame.time % GameParameters.COUNT_OF_SECONDS_IN_MINUTE);
-    if (seconds < GameParameters.DECIMAL_NUMBER_SYSTEM) {
-      seconds = `0${seconds}`;
-    }
-    DOMSeconds.textContent = seconds;
+    domSeconds.textContent = (seconds < GameParameters.DECIMAL_NUMBER_SYSTEM) ?
+      `0${seconds}` : seconds;
 
     const ratioOfTimes = stateGame.time / initialState.time;
     const radius = timerLine.r.baseVal.value;
@@ -48,36 +44,24 @@ class GameScreen {
     const stateGame = model.state;
     window.clearInterval(stateGame.timerId);
 
-    const DOMTimerValue = document.querySelector(`.timer-value`);
-    const DOMTimerMinutes = DOMTimerValue.querySelector(`.timer-value-mins`);
-    const DOMTimerSeconds = DOMTimerValue.querySelector(`.timer-value-secs`);
+    const domTimerValue = document.querySelector(`.timer-value`);
+    const domTimerMinutes = domTimerValue.querySelector(`.timer-value-mins`);
+    const domTimerSeconds = domTimerValue.querySelector(`.timer-value-secs`);
     const timerLine = document.querySelector(`.timer-line`);
-    this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds, timerLine);
+    this.displayTimer(stateGame.time, domTimerMinutes, domTimerSeconds, timerLine);
 
     stateGame.timerId = window.setInterval(() => {
       model.tick();
-      if (stateGame.time <= TIME_LEFT && !DOMTimerValue.classList.contains(`timer-value--finished`)) {
-        DOMTimerValue.classList.add(`timer-value--finished`);
+      if (stateGame.time <= TIME_LEFT && !domTimerValue.classList.contains(`timer-value--finished`)) {
+        domTimerValue.classList.add(`timer-value--finished`);
       }
 
-      this.displayTimer(stateGame.time, DOMTimerMinutes, DOMTimerSeconds, timerLine);
+      this.displayTimer(stateGame.time, domTimerMinutes, domTimerSeconds, timerLine);
 
       if (!model.isCanPlay()) {
         App.showResult(stateGame);
       }
     }, ONE_SECOND);
-  }
-
-  setStateGame(state) {
-    const newState = {
-      answers: []
-    };
-    for (const key in state) {
-      if (state.hasOwnProperty(key)) {
-        newState[key] = state[key];
-      }
-    }
-    return newState;
   }
 }
 

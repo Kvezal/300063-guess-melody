@@ -42,17 +42,10 @@ const QuestionType = {
 };
 
 const adaptData = (data) => {
-  const adapted = [];
-
-  data.forEach((item, index, array) => {
-    let nextLevel = index + 1;
-    if (array.length === nextLevel) {
-      nextLevel = 0;
-    }
-    adapted[index] = QuestionType[item.type](item, nextLevel);
+  return data.map((item, index, array) => {
+    const nextLevel = (index < array.length) ? index + 1 : 0;
+    return QuestionType[item.type](item, nextLevel);
   });
-
-  return adapted;
 };
 
 export default adaptData;

@@ -30,13 +30,6 @@ class Application {
     Application.showWelcome();
   }
 
-  static changeHash(id) {
-    const controller = Application.routes[id];
-    if (controller) {
-      controller.init();
-    }
-  }
-
   static showWelcome() {
     Application.routes[ControllerId.WELCOME].init();
   }

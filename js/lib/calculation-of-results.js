@@ -13,17 +13,13 @@ const calculationOfResults = (arrayResults, currentResult) => {
 
   const generalResults = arrayResults.concat([currentResult]);
 
-  generalResults.sort((left, right) => left.points - right.points);
+  generalResults.sort((left, right) => right.points - left.points);
 
   const numberOfPlayers = generalResults.length;
 
-  let placeOfPlayer;
-
-  generalResults.forEach((item, index) => {
-    if (item.id === currentResult.id) {
-      placeOfPlayer = numberOfPlayers - index;
-    }
-  });
+  const placeOfPlayer = generalResults.findIndex((item) => {
+    return item.id === currentResult.id;
+  }) + 1;
 
   const betterThanOtherPlayer = (numberOfPlayers - placeOfPlayer) * PERCENTAGES / numberOfPlayers;
   const mistakes = initialState.lives - currentResult.lives;
