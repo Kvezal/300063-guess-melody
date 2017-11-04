@@ -32,7 +32,7 @@ class GameView extends AbstractView {
     );
   }
 
-  get templateMistake() {
+  static get templateMistake() {
     return `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`;
   }
 
@@ -40,7 +40,7 @@ class GameView extends AbstractView {
     const amountMistakes = initialState.lives - this.model.state.lives;
     const amountMistakesTemplate = [];
     for (let i = 0; i < amountMistakes; i++) {
-      amountMistakesTemplate.push(this.templateMistake);
+      amountMistakesTemplate.push(GameView.templateMistake);
     }
     return amountMistakesTemplate.join(` `);
   }

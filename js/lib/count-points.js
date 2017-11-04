@@ -13,18 +13,18 @@ const countPoints = (answers, lives) => {
   }
 
   let numberOfQuickAnswers = 0;
-  const points = answers.reduce((sum, it) => {
+  const getPoints = (sum, it) => {
     if (it.answer && it.time < AnswerParameters.TIME_FAST_ANSWER) {
       numberOfQuickAnswers++;
       return sum + AnswerParameters.POINTS_FOR_FAST_ANSWER;
     }
-
     if (it.answer) {
       return sum + AnswerParameters.POINTS_FOR_SLOW_ANSWER;
     }
-
     return sum + AnswerParameters.POINTS_FOR_WRONG_ANSWER;
-  }, 0);
+  };
+
+  const points = answers.reduce(getPoints, 0);
 
   return {numberOfQuickAnswers, points};
 };
