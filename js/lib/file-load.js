@@ -30,13 +30,13 @@ const downloadPartOfAudio = (listAudio, lowIndex, pack) => {
       return downloadPartOfAudio(listAudio, topIndex, pack);
     };
 
-    let topIndex = lowIndex + pack;
+    const topIndex = lowIndex + pack;
     const partOfAudio = listAudio.slice(lowIndex, topIndex);
 
     return Promise.all(partOfAudio.map((it) => loadAudio(it))).
         then(nextPart).
         then(resolve).
-        catch(error.init);
+        catch(error.show);
   });
 };
 

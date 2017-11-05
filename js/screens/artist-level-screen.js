@@ -1,18 +1,14 @@
-import ArtistLevelView from '../views/artist-level-view';
 import App from '../application';
 import Utils from '../lib/utils';
 
 const START_INDEX_IN_INPUT_ID = 7;
 
 class ArtistLevelScreen {
-  init(model) {
-    this.view = new ArtistLevelView(model);
-    const stateGame = this.view.model.state;
-
-    const mainWrap = document.querySelector(`.main-wrap`);
+  init(gameModel) {
+    const stateGame = gameModel.state;
     const time = new Date();
 
-    this.view.playerControlClickHandler = (evt) => {
+    this.playerControlClickHandler = (evt) => {
       evt.preventDefault();
 
       if (evt.currentTarget.classList.contains(`player-control--play`)) {
@@ -21,29 +17,28 @@ class ArtistLevelScreen {
       return Utils.stopSong(evt.currentTarget);
     };
 
-    this.view.answerHandler = (evt) => {
+    this.answerHandler = (evt) => {
       evt.preventDefault();
 
-      const currentLevel = model.getCurrentLevel();
+      const currentLevel = gameModel.currentLevel;
       const answerIndex = evt.currentTarget.htmlFor.slice(START_INDEX_IN_INPUT_ID);
       const answer = currentLevel.answers[answerIndex].isCorrect;
 
       stateGame.level = currentLevel.nextLevel;
 
       if (!answer) {
-        model.die();
+        gameModel.die();
       }
 
-      model.addAnswer(answer, time);
+      gameModel.addAnswer(answer, time);
       App.showGame(stateGame);
 
-      if (!model.isCanPlay()) {
+      if (!gameModel.isCanPlay()) {
         App.showResult(stateGame);
         return;
       }
     };
-
-    Utils.displayElement(this.view.element, mainWrap);
+    return this;
   }
 }
 

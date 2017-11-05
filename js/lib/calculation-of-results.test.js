@@ -27,8 +27,8 @@ const arrayResults = [
     id: 2
   },
   {
-    points: 12,
-    numberOfQuickAnswers: 2,
+    points: 11,
+    numberOfQuickAnswers: 1,
     lives: 3,
     time: 30,
     timeLeft: 270,

@@ -1,20 +1,21 @@
 import AbstractView from './abstract-view';
 
 class ArtistLevelView extends AbstractView {
-  constructor(model) {
+  constructor(gameView) {
     super();
 
-    this.model = model;
+    this.answerHandler = gameView.artistLevel.answerHandler;
+    this.playerControlClickHandler = gameView.artistLevel.playerControlClickHandler;
+    this.currentLevel = gameView.model.currentLevel;
+    this._answers = this.currentLevel.answers;
   }
 
   get template() {
-    const currentLevel = this.model.getCurrentLevel();
-
     return (
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${currentLevel.question}" autoplay></audio>
+          <audio src="${this.currentLevel.question}" autoplay></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>
@@ -22,13 +23,13 @@ class ArtistLevelView extends AbstractView {
         </div>
       </div>
       <form class="main-list">
-        ${this.getArtistAnswerOptions(currentLevel.answers)}
+        ${this.artistAnswerOptions}
       </form>`
     );
   }
 
-  getArtistAnswerOptions(answers) {
-    return [...answers].map((item, index) => {
+  get artistAnswerOptions() {
+    return [...this._answers].map((item, index) => {
       return (
         `<div class="main-answer-wrapper">
           <input class="main-answer-r" type="radio" id="answer-${index}" name="answer" value="val-${index}"/>

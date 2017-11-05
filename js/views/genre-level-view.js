@@ -1,26 +1,27 @@
 import AbstractView from './abstract-view';
 
 class GenreLevelView extends AbstractView {
-  constructor(model) {
+  constructor(gameView) {
     super();
 
-    this.model = model;
+    this.answerHandler = gameView.genreLevel.answerHandler;
+    this.playerControlClickHandler = gameView.genreLevel.playerControlClickHandler;
+    this.currentLevel = gameView.model.currentLevel;
+    this._answers = this.currentLevel.answers;
   }
 
   get template() {
-    const currentLevel = this.model.getCurrentLevel();
-
     return (
-      `<h2 class="title">${currentLevel.question}</h2>
+      `<h2 class="title">${this.currentLevel.question}</h2>
       <form class="genre">
-        ${this.getGenreAnswerOptions(currentLevel.answers)}
+        ${this.genreAnswerOptions}
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>`
     );
   }
 
-  getGenreAnswerOptions(answers) {
-    return [...answers].map((item, index) => {
+  get genreAnswerOptions() {
+    return [...this._answers].map((item, index) => {
       return (
         `<div class="genre-answer">
           <div class="player-wrapper">

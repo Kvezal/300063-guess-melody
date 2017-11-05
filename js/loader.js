@@ -41,7 +41,7 @@ class Loader {
   }
 
   static loadResourses(resourses) {
-    let listOfAudio = new Set();
+    const listOfAudio = new Set();
     const listOfImage = new Set();
 
     resourses.forEach((it) => {

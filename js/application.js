@@ -1,8 +1,6 @@
 import welcomeScreen from './screens/welcome-screen';
 import GameScreen from './screens/game-screen';
 import resultScreen from './screens/result-screen';
-import showArtistLevel from './screens/artist-level-screen';
-import showGenreLevel from './screens/genre-level-screen';
 import Loader from './loader';
 import SplashScreen from './screens/splash-screen';
 import error from './screens/error-screen';
@@ -12,8 +10,6 @@ import {GameParameters} from './data/data';
 const ControllerId = {
   WELCOME: ``,
   GAME: `game`,
-  ARTIST: `artist`,
-  GENRE: `genre`,
   RESULT: `result`
 };
 
@@ -22,19 +18,10 @@ class Application {
     Application.routes = {
       [ControllerId.WELCOME]: welcomeScreen,
       [ControllerId.GAME]: new GameScreen(gameData),
-      [ControllerId.ARTIST]: showArtistLevel,
-      [ControllerId.GENRE]: showGenreLevel,
       [ControllerId.RESULT]: resultScreen
     };
 
     Application.showWelcome();
-  }
-
-  static changeHash(id) {
-    const controller = Application.routes[id];
-    if (controller) {
-      controller.init();
-    }
   }
 
   static showWelcome() {
@@ -69,14 +56,7 @@ class Application {
           then(() => {
             Application.routes[ControllerId.RESULT].init(currentResult, listResults);
           }).
-          catch(error.init);
-    }
-  }
-
-  static changeLevel(model) {
-    const controller = this.routes[model.data[model.state.level].type];
-    if (controller) {
-      controller.init(model);
+          catch(error.show);
     }
   }
 }
@@ -84,7 +64,7 @@ class Application {
 const openPage = () => {
   data.
       then(Application.init).
-      catch(error.init);
+      catch(error.show);
 };
 
 const splash = new SplashScreen();
@@ -95,6 +75,6 @@ const data = Loader.loadData();
 data.
     then(Loader.loadResourses).
     then(openPage).
-    catch(error.init);
+    catch(error.show);
 
 export default Application;
