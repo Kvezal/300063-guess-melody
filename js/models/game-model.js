@@ -35,7 +35,7 @@ class GameModel {
     this.state.answers.push({answer, time});
   }
 
-  getCurrentLevel() {
+  get currentLevel() {
     return Utils.getLevel(this.state.level, this.data);
   }
 }

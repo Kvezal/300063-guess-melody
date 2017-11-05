@@ -1,16 +1,13 @@
-import GenreLevelView from '../views/genre-level-view';
 import App from '../application';
 import Utils from '../lib/utils';
 
 class GenreLevelScreen {
-  init(model) {
-    this.view = new GenreLevelView(model);
-    const stateGame = this.view.model.state;
-
-    const mainWrap = document.querySelector(`.main-wrap`);
+  init(gameModel) {
+    this.model = gameModel;
+    this.stateGame = this.model.state;
     const time = new Date();
 
-    this.view.playerControlClickHandler = (evt) => {
+    this.playerControlClickHandler = (evt) => {
       evt.preventDefault();
 
       const lastPlayerControlPlay = document.querySelector(`.player-control--pause`);
@@ -28,10 +25,10 @@ class GenreLevelScreen {
       }
     };
 
-    this.view.answerHandler = (evt) => {
+    this.answerHandler = (evt) => {
       evt.preventDefault();
 
-      const currentLevel = model.getCurrentLevel();
+      const currentLevel = gameModel.currentLevel;
       const form = evt.currentTarget;
       const answersList = form.querySelectorAll(`input[name="answer"]`);
 
@@ -39,30 +36,30 @@ class GenreLevelScreen {
 
       if (checkedFormElement.length) {
         const answer = checkedFormElement.every((it) => it);
-        form.removeEventListener(`submit`, this.view.answerHandler);
+        form.removeEventListener(`submit`, this.answerHandler);
 
-        stateGame.level = currentLevel.nextLevel;
+        this.stateGame.level = currentLevel.nextLevel;
 
         if (!answer) {
-          model.die();
+          gameModel.die();
         }
 
-        model.addAnswer(answer, time);
-        App.showGame(stateGame);
+        gameModel.addAnswer(answer, time);
+        App.showGame(this.stateGame);
 
-        if (!model.isCanPlay()) {
-          App.showResult(stateGame);
+        if (!gameModel.isCanPlay()) {
+          App.showResult(this.stateGame);
           return;
         }
       }
     };
 
-    Utils.displayElement(this.view.element, mainWrap);
+    return this;
   }
 
   getCheckedFormElement(list) {
     const result = [];
-    const currentLevel = this.view.model.getCurrentLevel();
+    const currentLevel = this.model.currentLevel;
 
     Array.prototype.forEach.call(list, (it, index) => {
       if (it.checked) {

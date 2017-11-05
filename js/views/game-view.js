@@ -1,9 +1,21 @@
 import AbstractView from './abstract-view';
 import {initialState} from '../data/data';
 import Utils from '../lib/utils';
+import ArtistLevelView from './artist-level-view';
+import GenreLevelView from './genre-level-view';
 
 const TIME_LEFT = 30;
 const ONE_SECOND = 1000;
+
+const TypesOfLevels = {
+  ARTIST: `artist`,
+  GENRE: `genre`
+};
+
+const routesLevel = {
+  [TypesOfLevels.ARTIST]: ArtistLevelView,
+  [TypesOfLevels.GENRE]: GenreLevelView
+};
 
 class GameView extends AbstractView {
   constructor(model) {
@@ -49,6 +61,9 @@ class GameView extends AbstractView {
     const timerValue = element.querySelector(`.timer-value`);
     const timerLine = element.querySelector(`.timer-line`);
     this.tick(timerValue, timerLine);
+
+    this.levelContainer = element.querySelector(`.main-wrap`);
+    this.updateLevel();
   }
 
   tick(timerValue, timerLine) {
@@ -66,6 +81,12 @@ class GameView extends AbstractView {
       }
       this.tick(timerValue, timerLine);
     }, ONE_SECOND);
+  }
+
+  updateLevel() {
+    const currentTypeLevel = this.model.currentLevel.type;
+    const level = new routesLevel[currentTypeLevel](this).element;
+    Utils.displayElement(level, this.levelContainer);
   }
 }
 

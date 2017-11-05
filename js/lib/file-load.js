@@ -36,7 +36,7 @@ const downloadPartOfAudio = (listAudio, lowIndex, pack) => {
     return Promise.all(partOfAudio.map((it) => loadAudio(it))).
         then(nextPart).
         then(resolve).
-        catch(error.init);
+        catch(error.show);
   });
 };
 

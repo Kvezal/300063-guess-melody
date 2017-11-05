@@ -62,7 +62,7 @@ class Application {
           then(() => {
             Application.routes[ControllerId.RESULT].init(currentResult, listResults);
           }).
-          catch(error.init);
+          catch(error.show);
     }
   }
 
@@ -77,7 +77,7 @@ class Application {
 const openPage = () => {
   data.
       then(Application.init).
-      catch(error.init);
+      catch(error.show);
 };
 
 const splash = new SplashScreen();
@@ -88,6 +88,6 @@ const data = Loader.loadData();
 data.
     then(Loader.loadResourses).
     then(openPage).
-    catch(error.init);
+    catch(error.show);
 
 export default Application;

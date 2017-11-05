@@ -1,21 +1,21 @@
 import AbstractView from './abstract-view';
 
 class ArtistLevelView extends AbstractView {
-  constructor(model) {
+  constructor(gameView) {
     super();
 
-    this.model = model;
+    this.answerHandler = gameView.artistLevel.answerHandler;
+    this.playerControlClickHandler = gameView.artistLevel.playerControlClickHandler;
+    this.currentLevel = gameView.model.currentLevel;
+    this._answers = this.currentLevel.answers;
   }
 
   get template() {
-    const currentLevel = this.model.getCurrentLevel();
-    this._answers = currentLevel.answers;
-
     return (
       `<h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper">
         <div class="player">
-          <audio src="${currentLevel.question}" autoplay></audio>
+          <audio src="${this.currentLevel.question}" autoplay></audio>
           <button class="player-control player-control--pause"></button>
           <div class="player-track">
             <span class="player-status"></span>

@@ -2,6 +2,8 @@ import App from '../application';
 import GameModel from '../models/game-model';
 import GameView from '../views/game-view';
 import Utils from '../lib/utils';
+import artistLevel from './artist-level-screen';
+import genreLevel from './genre-level-screen';
 
 class GameScreen {
   constructor(data) {
@@ -22,8 +24,10 @@ class GameScreen {
       }
     };
 
+    this.view.artistLevel = artistLevel.init(this.model);
+    this.view.genreLevel = genreLevel.init(this.model);
+
     Utils.displayScreen(this.view.element);
-    App.changeLevel(this.view.model);
   }
 }
 
