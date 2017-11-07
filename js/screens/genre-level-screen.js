@@ -45,12 +45,13 @@ class GenreLevelScreen {
         }
 
         gameModel.addAnswer(answer, time);
-        App.showGame(this.stateGame);
 
         if (!gameModel.isCanPlay()) {
           App.showResult(this.stateGame);
           return;
         }
+
+        App.showGame(this.stateGame);
       }
     };
 

@@ -1,15 +1,11 @@
-import error from '../screens/error-screen';
-
-const loadAudio = (url) => {
+async function loadAudio(url) {
   return new Promise((onLoad, onError) => {
     const audio = new Audio();
-    audio.addEventListener(`canplaythrough`, () => {
-      return onLoad(audio);
-    });
+    audio.oncanplaythrough = () => onLoad(audio);
     audio.onerror = () => onError(`Не удалось загрузить мелодию: ${url}`);
     audio.src = url;
   });
-};
+}
 
 const loadImage = (url) => {
   return new Promise((onLoad, onError) => {
@@ -20,24 +16,13 @@ const loadImage = (url) => {
   });
 };
 
-const downloadPartOfAudio = (listAudio, lowIndex, pack) => {
-  return new Promise((resolve) => {
+async function downloadPartOfAudio(listAudio) {
+  const listFile = [];
+  for (const item of listAudio) {
+    const file = await loadAudio(item);
+    listFile.push(file);
+  }
+  return listFile;
+}
 
-    const nextPart = () => {
-      if (listAudio.length <= topIndex) {
-        return resolve(true);
-      }
-      return downloadPartOfAudio(listAudio, topIndex, pack);
-    };
-
-    const topIndex = lowIndex + pack;
-    const partOfAudio = listAudio.slice(lowIndex, topIndex);
-
-    return Promise.all(partOfAudio.map((it) => loadAudio(it))).
-        then(nextPart).
-        then(resolve).
-        catch(error.show);
-  });
-};
-
-export {loadImage, downloadPartOfAudio};
+export {loadImage, downloadPartOfAudio, loadAudio};

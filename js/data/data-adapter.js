@@ -41,11 +41,12 @@ const QuestionType = {
   'artist': adaptArtistType
 };
 
-const adaptData = (data) => {
-  return data.map((item, index, array) => {
+async function adaptData(data) {
+  const adaptedData = data.map((item, index, array) => {
     const nextLevel = (index < array.length) ? index + 1 : 0;
     return QuestionType[item.type](item, nextLevel);
   });
-};
+  return adaptedData;
+}
 
 export default adaptData;

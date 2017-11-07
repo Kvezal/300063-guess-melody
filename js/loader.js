@@ -1,34 +1,28 @@
 import adapt from './data/data-adapter';
 import {loadImage, downloadPartOfAudio} from './lib/file-load';
-import error from './screens/error-screen';
 
 const SERVER_URL = `https://es.dump.academy/guess-melody`;
 const DEFAULT_NAME = `kvezal300063`;
 
 class Loader {
-  static loadData() {
-    return fetch(`${SERVER_URL}/questions`).
-        then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
-        }).
-        then(adapt).
-        catch(error.init);
+  static async loadData() {
+    const response = await fetch(`${SERVER_URL}/questions`);
+    if (response.ok) {
+      const responseData = await response.json();
+      return adapt(responseData);
+    }
+    throw new Error(`Неизвестный статус: ${response.status}`);
   }
 
-  static loadResults(name = DEFAULT_NAME) {
-    return fetch(`${SERVER_URL}/stats/${name}`)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
-        });
+  static async loadResults(name = DEFAULT_NAME) {
+    const response = await fetch(`${SERVER_URL}/stats/${name}`);
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(`Неизвестный статус: ${response.status}`);
   }
 
-  static saveResults(data, name = DEFAULT_NAME) {
+  static async saveResults(data, name = DEFAULT_NAME) {
     const requestSettings = {
       body: JSON.stringify(data),
       headers: {
@@ -40,7 +34,7 @@ class Loader {
     return fetch(`${SERVER_URL}/stats/${name}`, requestSettings);
   }
 
-  static loadResourses(resourses) {
+  static async loadResourses(resourses) {
     const listOfAudio = new Set();
     const listOfImage = new Set();
 
@@ -56,8 +50,7 @@ class Loader {
     });
 
     [...listOfImage].map((it) => loadImage(it));
-
-    return downloadPartOfAudio([...listOfAudio], 0, 1);
+    return downloadPartOfAudio([...listOfAudio]);
   }
 }
 

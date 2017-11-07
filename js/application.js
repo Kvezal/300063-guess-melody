@@ -24,6 +24,21 @@ class Application {
     Application.showWelcome();
   }
 
+  static async prepareDataAndInit() {
+
+    const openPage = (data) => {
+      Application.init(data);
+    };
+
+    try {
+      const data = await Loader.loadData();
+      await Loader.loadResourses(data);
+      openPage(data);
+    } catch (err) {
+      error.show(err);
+    }
+  }
+
   static showWelcome() {
     Application.routes[ControllerId.WELCOME].init();
   }
@@ -32,7 +47,7 @@ class Application {
     Application.routes[ControllerId.GAME].init(state);
   }
 
-  static showResult(state) {
+  static async showResult(state) {
     window.clearInterval(state.timerId);
 
     let listResults = [];
@@ -43,38 +58,22 @@ class Application {
       return;
     }
 
-    const findCurrentResult = (arrayResults) => {
-      listResults = arrayResults;
-      return currentResult;
-    };
-
     if (state.answers.length === GameParameters.NUMBER_ANSWERS) {
       splash.start();
-      Loader.loadResults().
-          then(findCurrentResult).
-          then(Loader.saveResults).
-          then(() => {
-            Application.routes[ControllerId.RESULT].init(currentResult, listResults);
-          }).
-          catch(error.show);
+      try {
+        listResults = await Loader.loadResults();
+        await Loader.saveResults(currentResult);
+        Application.routes[ControllerId.RESULT].init(currentResult, listResults);
+      } catch (err) {
+        error.show(err);
+      }
     }
   }
 }
 
-const openPage = () => {
-  data.
-      then(Application.init).
-      catch(error.show);
-};
-
 const splash = new SplashScreen();
 splash.start();
 
-const data = Loader.loadData();
-
-data.
-    then(Loader.loadResourses).
-    then(openPage).
-    catch(error.show);
+Application.prepareDataAndInit();
 
 export default Application;

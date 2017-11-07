@@ -31,12 +31,12 @@ class ArtistLevelScreen {
       }
 
       gameModel.addAnswer(answer, time);
-      App.showGame(stateGame);
 
       if (!gameModel.isCanPlay()) {
         App.showResult(stateGame);
         return;
       }
+      App.showGame(stateGame);
     };
     return this;
   }
