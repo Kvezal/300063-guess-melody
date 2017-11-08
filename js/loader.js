@@ -1,7 +1,7 @@
 import adapt from './data/data-adapter';
 import {loadImage, downloadPartOfAudio} from './lib/file-load';
 
-const SERVER_URL = `http://localhost:3000`;
+const SERVER_URL = `https://es.dump.academy/guess-melody`;
 const DEFAULT_NAME = `kvezal300063`;
 
 class Loader {
@@ -15,7 +15,7 @@ class Loader {
   }
 
   static async loadResults(name = DEFAULT_NAME) {
-    const response = await fetch(`https://es.dump.academy/guess-melody/stats/${name}`);
+    const response = await fetch(`${SERVER_URL}/stats/${name}`);
     if (response.ok) {
       return response.json();
     }
@@ -31,7 +31,7 @@ class Loader {
       method: `POST`
     };
 
-    return fetch(`https://es.dump.academy/guess-melody/stats/${name}`, requestSettings);
+    return fetch(`${SERVER_URL}/stats/${name}`, requestSettings);
   }
 
   static async loadResourses(resourses) {
