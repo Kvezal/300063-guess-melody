@@ -61,8 +61,8 @@ class Application {
     if (state.answers.length === GameParameters.NUMBER_ANSWERS) {
       splash.start();
       try {
-        listResults = await Loader.loadResults();
         await Loader.saveResults(currentResult);
+        listResults = await Loader.loadResults();
         Application.routes[ControllerId.RESULT].init(currentResult, listResults);
       } catch (err) {
         error.show(err);

@@ -11,13 +11,16 @@ const calculationOfResults = (arrayResults, currentResult) => {
     return `<div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>`;
   }
 
-  const generalResults = arrayResults.concat([currentResult]);
+  arrayResults.sort((left, right) => {
+    const result = right.points - left.points;
+    if (!result) {
+      return right.time - left.time;
+    }
+    return result;
+  });
+  const numberOfPlayers = arrayResults.length;
 
-  generalResults.sort((left, right) => right.points - left.points);
-
-  const numberOfPlayers = generalResults.length;
-
-  const placeOfPlayer = generalResults.findIndex((item) => {
+  const placeOfPlayer = arrayResults.findIndex((item) => {
     return item.id === currentResult.id;
   }) + 1;
 
